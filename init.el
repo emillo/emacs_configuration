@@ -17,7 +17,7 @@
     (which-key-mode 1)
     (message "which-key-mode not available, skipping")))
 
-(setq 
+(setq
   inhibit-splash-screen t
   initial-scratch-message nil
   lisp-indent-offset 2
@@ -54,9 +54,9 @@
   calendar-day-abbrev-array ["Dom" "Lun" "Mar" "Mer" "Gio" "Ven" "Sab"]
   calendar-day-header-array ["Do" "Lu" "Ma" "Me" "Gi" "Ve" "Sa"]
   calendar-month-name-array ["Gennaio" "Febbraio" "Marzo" "Aprile"
-				              "Maggio" "Giugno" "Luglio" "Agosto"
-				              "Settembre" "Ottobre" "Novembre"
-				              "Dicembre"]
+                              "Maggio" "Giugno" "Luglio" "Agosto"
+                              "Settembre" "Ottobre" "Novembre"
+                              "Dicembre"]
   calendar-month-abbrev-array ["Gen" "Feb" "Mar" "Apr" "Mag"
                                 "Giu" "Lug" "Ago"
                                 "Set" "Ott" "Nov" "Dic"]
@@ -98,7 +98,7 @@
 (global-set-key (kbd "s-+") 'text-scale-increase)
 (global-set-key (kbd "s--") 'text-scale-decrease)
 
-;; Theme                                   
+;; Theme
 (setq modus-themes-headings
   '((1 . (variable-pitch 1.8))
      (2 . (1.5))
