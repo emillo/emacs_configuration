@@ -1,0 +1,15 @@
+* Emacs minimal init file
+
+The aim of this repo is to provide a minimal emacs configuration that doesn't use external packages.
+
+Tested with emacs 31.0.50 built from sources on 2024-08-07
+
+** Example code
+
+Let's see how github org mode rendering deals with literate programming blocks:
+
+#+begin_src emacs-lisp
+  (setq-default
+    indent-tabs-mode nil
+    tab-width 4)
+#+end_src
