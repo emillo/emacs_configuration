@@ -89,6 +89,9 @@
 (setq general-holidays nil)
 (setq calendar-holidays
   (append holiday-christian-holidays holiday-general-holidays))
+(setq cal-tex-diary t)
+(setq calendar-mark-diary-entries-flag t)
+(setq calendar-mark-holidays-flag t)
 
 ;; Key bindings
 (global-set-key (kbd "<f12>") 'mil/toggle-line-numbers)
