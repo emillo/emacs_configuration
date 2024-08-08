@@ -100,6 +100,7 @@
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "s-+") 'text-scale-increase)
 (global-set-key (kbd "s--") 'text-scale-decrease)
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
 
 ;; Theme
 (setq modus-themes-headings
@@ -109,3 +110,16 @@
      (agenda-structure . (variable-pitch light 1.8))
      (t . (1.3))))
 (load-theme 'modus-vivendi-tinted)
+
+;; Org mode
+
+(setq
+  org-agenda-include-diary t
+  org-confirm-babel-evaluate nil
+  org-ctrl-k-protect-subtree t
+  org-cycle-separator-lines 0
+  org-ellipsis " ⤵"
+  org-hide-emphasis-markers t
+  org-log-done 'time
+  org-startup-indented t
+  org-startup-folded 'showall)
