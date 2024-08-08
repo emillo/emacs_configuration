@@ -65,13 +65,13 @@
 ;; Italian Holidays
 (setq holiday-general-holidays
   '((holiday-fixed 1 1 "Capodanno")
-     (holiday-fixed 5 1 "1 Maggio")
-     (holiday-fixed 4 25 "Liberazione")
-     (holiday-fixed 6 2 "Festa Repubblica")
+     (holiday-fixed 5 1 "Festa dei lavoratori")
+     (holiday-fixed 4 25 "Festa della liberazione")
+     (holiday-fixed 6 2 "Festa della repubblica")
      ))
 
 (setq holiday-christian-holidays
-  '((holiday-fixed 12 8 "Immacolata Concezione")
+  '((holiday-fixed 12 8 "Immacolata concezione")
      (holiday-fixed 12 25 "Natale")
      (holiday-fixed 12 26 "Santo Stefano")
      (holiday-fixed 1 6 "Epifania")
@@ -79,7 +79,7 @@
      (holiday-easter-etc -47 "Martedì grasso")
      (holiday-easter-etc  -2 "Venerdì Santo")
      (holiday-easter-etc   0 "Pasqua")
-     (holiday-easter-etc  +1 "Lunedì Pasqua")
+     (holiday-easter-etc  +1 "Lunedì di Pasqua")
      (holiday-fixed 8 15 "Assunzione di Maria")
      (holiday-fixed 11 1 "Ognissanti")))
 
