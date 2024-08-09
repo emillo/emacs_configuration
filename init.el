@@ -101,6 +101,7 @@
 (global-set-key (kbd "s-+") 'text-scale-increase)
 (global-set-key (kbd "s--") 'text-scale-decrease)
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
 
 ;; Theme
 (setq modus-themes-headings
@@ -111,7 +112,6 @@
      (t . (1.3))))
 (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
 (load-theme 'modus-vivendi-tinted)
-
 ;; Org mode
 (setq
   org-agenda-include-diary t
