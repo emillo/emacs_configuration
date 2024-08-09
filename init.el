@@ -109,10 +109,10 @@
      (agenda-date . (1.5))
      (agenda-structure . (variable-pitch light 1.8))
      (t . (1.3))))
+(setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
 (load-theme 'modus-vivendi-tinted)
 
 ;; Org mode
-
 (setq
   org-agenda-include-diary t
   org-confirm-babel-evaluate nil
