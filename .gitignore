@@ -1,6 +1,9 @@
 bookmarks
 auto-save-list/
-eln-cache/
+eln-cache/*
 eshell/
 ielm-history.eld
 projects
+diary
+session*
+
