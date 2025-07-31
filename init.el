@@ -17,6 +17,7 @@
     (which-key-mode 1)
     (message "which-key-mode not available, skipping")))
 
+(use-package org)
 (setq
   inhibit-splash-screen t
   initial-scratch-message nil
