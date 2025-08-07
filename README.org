@@ -1,8 +1,10 @@
 * Emacs minimal init file
 
-The aim of this repo is to provide a minimal emacs configuration that doesn't use external packages.
+The aim of this repo is to provide a minimal emacs configuration that
+restricts the use external packages and tries to leverage emacs
+built-in functionality.
+ 
 
-Tested with emacs 31.0.50 built from sources on 2024-08-07
 
 ** Example code
 
@@ -13,3 +15,11 @@ Let's see how github org mode rendering deals with literate programming blocks:
     indent-tabs-mode nil
     tab-width 4)
 #+end_src
+
+** External packages
+- ef-themes
+- magit
+- restclient or verb
+- orderless
+- vertico
+- consult

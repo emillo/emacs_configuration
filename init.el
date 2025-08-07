@@ -3,10 +3,14 @@
   :init
   (column-number-mode 1)
   (delete-selection-mode 1)
+  (desktop-save-mode 1)
+  ;; (display-time-mode 1)
   (electric-indent-mode 1)
   (electric-pair-mode 1)
   (fido-vertical-mode 1)
-  (global-hl-line-mode +1)
+  (global-auto-revert-mode 1)
+  (global-completion-preview-mode 1)
+  ;; (global-hl-line-mode +1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
@@ -15,14 +19,24 @@
   (if
     (boundp 'which-key-mode)
     (which-key-mode 1)
-    (message "which-key-mode not available, skipping")))
+    (message "which-key-mode not available, skipping"))
+  :config
+  (set-frame-font "Hack-15")
+  (add-to-list 'default-frame-alist '(fullscreen . maximized )))
 
 (use-package org)
 (setq
+  auto-revert-verbose t
+  desktop-save t
+  ;; display-time-24hr-format t
+  ;; display-time-day-and-date t
+  help-window-select t
   inhibit-splash-screen t
   initial-scratch-message nil
   lisp-indent-offset 2
+  Man-notify-method 'aggressive
   ring-bell-function 'ignore
+  shell-kill-buffer-on-exit t
   use-short-answers t
   visible-bell 'top-bottom
   visible-bell 1)
