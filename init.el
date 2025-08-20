@@ -16,36 +16,55 @@
   (tool-bar-mode -1)
   (tooltip-mode -1)
   (size-indication-mode 1)
+  :config
+  (set-frame-font "Hack-15")
+  (set-face-attribute 'default t :font "Hack-15")
+  (add-to-list 'default-frame-alist '(font . "Hack-15" ))
   (if
     (boundp 'which-key-mode)
     (which-key-mode 1)
     (message "which-key-mode not available, skipping"))
+  (setq
+    auto-revert-verbose t
+    desktop-save t
+    ;; display-time-24hr-format t
+    ;; display-time-day-and-date t
+    help-window-select t
+    inhibit-splash-screen t
+    initial-scratch-message nil
+    lisp-indent-offset 2
+    Man-notify-method 'aggressive
+    ring-bell-function 'ignore
+    shell-kill-buffer-on-exit t
+    use-short-answers t
+    visible-bell 'top-bottom
+    visible-bell 1)
+
+  (setq-default
+    indent-tabs-mode nil
+    tab-width 4)
+
+  (set-default indent-line-function 'insert-tab)
+
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  :bind
+  ("C-x C-b" . ibuffer))
+
+;; Org mode
+(use-package org
+  :defer t
   :config
-  (set-frame-font "Hack-15")
-  (add-to-list 'default-frame-alist '(fullscreen . maximized )))
+  (setq
+    org-agenda-include-diary t
+    org-confirm-babel-evaluate nil
+    org-ctrl-k-protect-subtree t
+    org-cycle-separator-lines 0
+    org-ellipsis " ⤵"
+    org-hide-emphasis-markers t
+    org-log-done 'time
+    org-startup-indented t
+    org-startup-folded 'showall))
 
-(use-package org)
-(setq
-  auto-revert-verbose t
-  desktop-save t
-  ;; display-time-24hr-format t
-  ;; display-time-day-and-date t
-  help-window-select t
-  inhibit-splash-screen t
-  initial-scratch-message nil
-  lisp-indent-offset 2
-  Man-notify-method 'aggressive
-  ring-bell-function 'ignore
-  shell-kill-buffer-on-exit t
-  use-short-answers t
-  visible-bell 'top-bottom
-  visible-bell 1)
-
-(setq-default
-  indent-tabs-mode nil
-  tab-width 4)
-
-(set-default indent-line-function 'insert-tab)
 
 ;; Custom toggles
 (defun mil/toggle-line-numbers (args)
@@ -127,14 +146,17 @@
      (t . (1.3))))
 (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
 (load-theme 'modus-vivendi-tinted)
-;; Org mode
-(setq
-  org-agenda-include-diary t
-  org-confirm-babel-evaluate nil
-  org-ctrl-k-protect-subtree t
-  org-cycle-separator-lines 0
-  org-ellipsis " ⤵"
-  org-hide-emphasis-markers t
-  org-log-done 'time
-  org-startup-indented t
-  org-startup-folded 'showall)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files '("~/.emacsMinimal/README.org")))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
