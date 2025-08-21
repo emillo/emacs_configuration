@@ -1,22 +1,207 @@
 * Emacs minimal init file
 
-The aim of this repo is to provide a minimal emacs configuration that
-restricts the use external packages and tries to leverage emacs
-built-in functionality.
- 
+The aim of this repo is to provide a minimal emacs configuration that restricts the use external packages and tries to leverage emacs built-in functionality.
 
+This file (README.org) contains the configuration of emacs in a literate programming style, meaning that the code is inside this very file and is /tangled/ into the target file, init.el.
 
-** Example code
+To do the tangling you invoke `M-x org-babel-tangle` and org-mode (org-babel, to be precise) will produce the `init.el` file
 
-Let's see how github org mode rendering deals with literate programming blocks:
+Taken some inspiration from [[https://github.com/ISouthRain/OpenEmacs][openEmacs]]
 
-#+begin_src emacs-lisp
+** Built-in emacs functionality
+
+*** Basic configuration
+Here I set some native emacs variables to fine tune its behaviour to how I like it:
+- `Man-notify-method 'aggressive` basically opens the man pages invoked by `M-x man` in the other window and gives it the focus, so you can read and move inside the man immediatly, eventually hit `q` to exit and you are back to where you were before invoking man.
+- `auto-revert-verbose t` it shows on the echo area when something outside emacs has changed a file and the buffer has been auto-reverted to what is on disk.
+- `desktop-save t` saves your open files/buffers when you quit emacs so when you launch emacs again it has all your "desktop" as you left it.
+- `help-window-select t` similar to man, I want the help window to have the focus so I can quickly quit with `q`
+- `inhibit-splash-screen t` disables the splash screen on start
+- `initial-scratch-message nil` gives you an empty scratch buffer on start
+- `lisp-indent-offset 2` lisp code indentation
+- `make-backup-files nil` skip creation of backup files
+- `ring-bell-function 'ignore` no bell
+- `shell-kill-buffer-on-exit t` when I exit a shell, I don't want an useless buffer to kill manually
+- `use-short-answers t` use y or n instead of yes and no
+- `visible-bell t` flash the screen instead of sounding a bell
+
+#+begin_src elisp :tangle init.el
+  (setq
+    Man-notify-method 'aggressive
+    auto-revert-verbose t
+    desktop-save t
+    help-window-select t
+    inhibit-splash-screen t
+    initial-scratch-message nil
+    lisp-indent-offset 2
+    make-backup-files nil
+    ring-bell-function 'ignore
+    shell-kill-buffer-on-exit t
+    use-short-answers t
+    visible-bell t)
+
   (setq-default
     indent-tabs-mode nil
     tab-width 4)
+
+  (set-default indent-line-function 'insert-tab)
+
 #+end_src
 
-** External packages
+
+*** Minor modes
+#+begin_src elisp :tangle init.el
+  (column-number-mode 1)
+  (delete-selection-mode 1)
+  (desktop-save-mode 1)
+  (electric-indent-mode 1)
+  (electric-pair-mode 1)
+  (fido-vertical-mode 1)
+  (global-auto-revert-mode 1)
+  (global-completion-preview-mode 1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+  (size-indication-mode 1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+  (which-key-mode 1)
+#+end_src
+
+
+*** Appearance
+#+begin_src elisp :tangle init.el
+  ;; Theme
+  (setq modus-themes-headings
+    '((1 . (variable-pitch 1.8))
+       (2 . (1.5))
+       (agenda-date . (1.5))
+       (agenda-structure . (variable-pitch light 1.8))
+       (t . (1.3))))
+  (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
+  (load-theme 'modus-vivendi-tinted)
+
+  ;; Font
+  (set-frame-font "Hack-15")
+  (set-face-attribute 'default t :font "Hack-15")
+  (add-to-list 'default-frame-alist '(font . "Hack-15" ))
+
+  ;; Start maximized
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
+
+*** Key bindings
+#+begin_src elisp :tangle init.el
+  ;; Key bindings
+  (global-set-key (kbd "C-;") 'comment-line)
+  (global-set-key (kbd "M-o") 'other-window)
+  (global-set-key (kbd "s-+") 'text-scale-increase)
+  (global-set-key (kbd "s--") 'text-scale-decrease)
+  (global-set-key (kbd "C-x k") 'kill-current-buffer)
+  (global-set-key [remap dabbrev-expand] 'hippie-expand)
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+#+end_src
+
+*** Org mode
+#+begin_src elisp :tangle init.el
+  ;; Org mode
+  (use-package org
+    :defer t
+    :config
+    (setq
+      org-agenda-include-diary t
+      org-confirm-babel-evaluate nil
+      org-ctrl-k-protect-subtree t
+      org-cycle-separator-lines 0
+      org-ellipsis " ⤵"
+      org-hide-emphasis-markers t
+      org-log-done 'time
+      org-startup-indented t
+      org-startup-folded 'showall))
+
+#+end_src
+
+
+*** Italian calendar/diary localization
+Here I have some very old code for localization of the calendar/diary experience in italian; I don't know if there is a more modern/beter way to do it...
+#+begin_src elisp :tangle init.el
+  ;; Italian calendar names
+  (setq calendar-week-start-day 1
+    calendar-day-name-array ["Domenica" "Lunedì" "Martedì" "Mercoledì"
+                              "Giovedì" "Venerdì" "Sabato"]
+    calendar-day-abbrev-array ["Dom" "Lun" "Mar" "Mer" "Gio" "Ven" "Sab"]
+    calendar-day-header-array ["Do" "Lu" "Ma" "Me" "Gi" "Ve" "Sa"]
+    calendar-month-name-array ["Gennaio" "Febbraio" "Marzo" "Aprile"
+                                "Maggio" "Giugno" "Luglio" "Agosto"
+                                "Settembre" "Ottobre" "Novembre"
+                                "Dicembre"]
+    calendar-month-abbrev-array ["Gen" "Feb" "Mar" "Apr" "Mag"
+                                  "Giu" "Lug" "Ago"
+                                  "Set" "Ott" "Nov" "Dic"]
+    calendar-date-style 'european)
+
+  ;; Italian Holidays
+  (setq holiday-general-holidays
+    '((holiday-fixed 1 1 "Capodanno")
+       (holiday-fixed 5 1 "Festa dei lavoratori")
+       (holiday-fixed 4 25 "Festa della liberazione")
+       (holiday-fixed 6 2 "Festa della repubblica")
+       ))
+
+  (setq holiday-christian-holidays
+    '((holiday-fixed 12 8 "Immacolata concezione")
+       (holiday-fixed 12 25 "Natale")
+       (holiday-fixed 12 26 "Santo Stefano")
+       (holiday-fixed 1 6 "Epifania")
+       (holiday-easter-etc -52 "Giovedì grasso")
+       (holiday-easter-etc -47 "Martedì grasso")
+       (holiday-easter-etc  -2 "Venerdì Santo")
+       (holiday-easter-etc   0 "Pasqua")
+       (holiday-easter-etc  +1 "Lunedì di Pasqua")
+       (holiday-fixed 8 15 "Assunzione di Maria")
+       (holiday-fixed 11 1 "Ognissanti")))
+
+  (setq calendar-holidays
+    (append holiday-christian-holidays holiday-general-holidays))
+
+  ;; Disable other holidays
+  (setq hebrew-holidays nil)
+  (setq islamic-holidays nil)
+  (setq oriental-holidays nil)
+  (setq general-holidays nil)
+
+  ;; Other calendar/diary goodies
+  (setq cal-tex-diary t)
+  (setq calendar-mark-diary-entries-flag t)
+  (setq calendar-mark-holidays-flag t)
+#+end_src
+
+*** Custom toggles for whitespace mode and line numbers
+#+begin_src elisp :tangle init.el
+  ;; Custom toggles
+  (defun mil/toggle-line-numbers (args)
+    "toggles display-line-numbers-mode"
+    (interactive "P")
+    (if (bound-and-true-p display-line-numbers-mode)
+      (display-line-numbers-mode -1)
+      (display-line-numbers-mode 1)))
+
+  (defun mil/toggle-whitespace (args)
+    "toggles whitespace-mode"
+    (interactive "P")
+    (if (bound-and-true-p whitespace-mode)
+      (whitespace-mode -1)
+      (whitespace-mode 1)))
+
+  (global-set-key (kbd "<f12>") 'mil/toggle-line-numbers)
+  (global-set-key (kbd "S-<f12>") 'mil/toggle-whitespace)
+#+end_src
+
+
+
+** External packages to possibly include
+
+
 - ef-themes
 - magit
 - restclient or verb
