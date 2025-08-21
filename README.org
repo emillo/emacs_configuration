@@ -1,12 +1,12 @@
-* Emacs minimal init file
+* Emacs minimal initialization file
 
-The aim of this repo is to provide a minimal emacs configuration that restricts the use external packages trying to leverage emacs built-in functionality.
+The aim of this repository is to provide a minimal emacs configuration that restricts the use external packages trying to leverage emacs built-in functionality.
 
 This file (README.org) contains the configuration of emacs in a literate programming style, meaning that the code is inside this very file and is /tangled/ into the target file, init.el.
 
 To do the tangling you invoke `M-x org-babel-tangle` and org-mode (org-babel, to be precise) will produce the `init.el` file
 
-Taken some inspiration from [[https://github.com/ISouthRain/OpenEmacs][openEmacs]]
+Took some ideas from [[https://github.com/ISouthRain/OpenEmacs][openEmacs]]
 
 ** Built-in emacs functionality
 
@@ -14,8 +14,9 @@ Taken some inspiration from [[https://github.com/ISouthRain/OpenEmacs][openEmacs
 Here I set some native emacs variables to fine tune its behaviour to how I like it:
 - ~Man-notify-method 'aggressive~ basically opens the man pages invoked by ~M-x man~ in the other window and gives it the focus, so you can read and move inside the man immediatly, eventually hit ~q~ to exit and you are back to where you were before invoking man.
 - ~auto-revert-verbose t~ it shows on the echo area when something outside emacs has changed a file and the buffer has been auto-reverted to what is on disk.
+- ~create-lockfiles nil~ don't create locks starting with ".#" when you edit a file.
 - ~desktop-save t~ saves your open files/buffers when you quit emacs so when you launch emacs again it has all your "desktop" as you left it.
-- ~help-window-select t~ similar to man, I want the help window to have the focus so I can quickly quit with ~q~
+- ~help-window-select t~ similar to man, I want the help window to have the focus so I can quickly read and quit with ~q~
 - ~inhibit-splash-screen t~ disables the splash screen on start
 - ~initial-scratch-message nil~ gives you an empty scratch buffer on start
 - ~lisp-indent-offset 2~ lisp code indentation
@@ -29,6 +30,7 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
   (setq
     Man-notify-method 'aggressive
     auto-revert-verbose t
+    create-lockfiles nil
     desktop-save t
     help-window-select t
     inhibit-splash-screen t
@@ -68,7 +70,22 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
 #+end_src
 
 
+**** Electric pair mode configuration
+Here basically I add the /backtick/ ("`") to the list of characters that electric-pair-mode should treat as a pair.
+#+begin_src elisp :tangle init.el
+  (setq electric-pair-pairs
+    (quote
+      ((34 . 34)
+        (8216 . 8217)
+        (8220 . 8221)
+        (96 . 96))))
+#+end_src
+
+
 *** Appearance
+Here I use two of the built-in [[https://protesilaos.com/emacs/modus-themes][modus-themes]] made by [[https://protesilaos.com/][Protesilaos Stavrou]], very clean and professional. And thoroughly documented in [[info:modus-themes#Top][its info manual]].
+
+These themes allow you to use variable pitch fonts, which give you bigger fonts on GUI emacs for titles, org headings, and so on. Nice.
 #+begin_src elisp :tangle init.el
   ;; Theme
   (setq modus-themes-headings
@@ -87,6 +104,17 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
 
   ;; Start maximized
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
+
+*** Window title
+Shows in the title bar the name of the buffer and the last command used.
+#+begin_src elisp :tangle init.el
+  (setq frame-title-format
+    '(:eval (format "Emacs - %s  [ %s ]"
+              (buffer-name)
+              last-command))
+    icon-title-format t)
 #+end_src
 
 
@@ -123,7 +151,7 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
 
 
 *** Italian calendar/diary localization
-Here I have some very old code for localization of the calendar/diary experience in italian; I don't know if there is a more modern/beter way to do it...
+Here I have some very old code for localization of the calendar/diary experience in Italian; I don't know if there is a more modern/better way to do it...
 #+begin_src elisp :tangle init.el
   ;; Italian calendar names
   (setq calendar-week-start-day 1
@@ -176,7 +204,11 @@ Here I have some very old code for localization of the calendar/diary experience
   (setq calendar-mark-holidays-flag t)
 #+end_src
 
-*** Custom toggles for whitespace mode and line numbers
+*** Custom toggles for white space mode and line numbers
+I generally don't want line numbers on everything, so I have a quick one key toggle for enabling ~display-line-numbers-mode~ in the current buffer.
+
+Similarly, I have another for ~whitespace-mode~ and one for ~visual-line-mode~
+
 #+begin_src elisp :tangle init.el
   ;; Custom toggles
   (defun mil/toggle-line-numbers (args)
@@ -192,9 +224,16 @@ Here I have some very old code for localization of the calendar/diary experience
     (if (bound-and-true-p whitespace-mode)
       (whitespace-mode -1)
       (whitespace-mode 1)))
+  (defun mil/toggle-visual-line-mode (args)
+    "toggles visual-line-mode"
+    (interactive "P")
+    (if(bound-and-true-p visual-line-mode)
+      (visual-line-mode -1)
+      (visual-line-mode 1)))
 
   (global-set-key (kbd "<f12>") 'mil/toggle-line-numbers)
   (global-set-key (kbd "S-<f12>") 'mil/toggle-whitespace)
+  (global-set-key (kbd "C-<f12>") 'mil/toggle-visual-line-mode)
 #+end_src
 
 
