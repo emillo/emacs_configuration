@@ -1,6 +1,6 @@
 * Emacs minimal init file
 
-The aim of this repo is to provide a minimal emacs configuration that restricts the use external packages and tries to leverage emacs built-in functionality.
+The aim of this repo is to provide a minimal emacs configuration that restricts the use external packages trying to leverage emacs built-in functionality.
 
 This file (README.org) contains the configuration of emacs in a literate programming style, meaning that the code is inside this very file and is /tangled/ into the target file, init.el.
 
@@ -12,18 +12,18 @@ Taken some inspiration from [[https://github.com/ISouthRain/OpenEmacs][openEmacs
 
 *** Basic configuration
 Here I set some native emacs variables to fine tune its behaviour to how I like it:
-- `Man-notify-method 'aggressive` basically opens the man pages invoked by `M-x man` in the other window and gives it the focus, so you can read and move inside the man immediatly, eventually hit `q` to exit and you are back to where you were before invoking man.
-- `auto-revert-verbose t` it shows on the echo area when something outside emacs has changed a file and the buffer has been auto-reverted to what is on disk.
-- `desktop-save t` saves your open files/buffers when you quit emacs so when you launch emacs again it has all your "desktop" as you left it.
-- `help-window-select t` similar to man, I want the help window to have the focus so I can quickly quit with `q`
-- `inhibit-splash-screen t` disables the splash screen on start
-- `initial-scratch-message nil` gives you an empty scratch buffer on start
-- `lisp-indent-offset 2` lisp code indentation
-- `make-backup-files nil` skip creation of backup files
-- `ring-bell-function 'ignore` no bell
-- `shell-kill-buffer-on-exit t` when I exit a shell, I don't want an useless buffer to kill manually
-- `use-short-answers t` use y or n instead of yes and no
-- `visible-bell t` flash the screen instead of sounding a bell
+- ~Man-notify-method 'aggressive~ basically opens the man pages invoked by ~M-x man~ in the other window and gives it the focus, so you can read and move inside the man immediatly, eventually hit ~q~ to exit and you are back to where you were before invoking man.
+- ~auto-revert-verbose t~ it shows on the echo area when something outside emacs has changed a file and the buffer has been auto-reverted to what is on disk.
+- ~desktop-save t~ saves your open files/buffers when you quit emacs so when you launch emacs again it has all your "desktop" as you left it.
+- ~help-window-select t~ similar to man, I want the help window to have the focus so I can quickly quit with ~q~
+- ~inhibit-splash-screen t~ disables the splash screen on start
+- ~initial-scratch-message nil~ gives you an empty scratch buffer on start
+- ~lisp-indent-offset 2~ lisp code indentation
+- ~make-backup-files nil~ skip creation of backup files
+- ~ring-bell-function 'ignore~ no bell
+- ~shell-kill-buffer-on-exit t~ when I exit a shell, I don't want an useless buffer to kill manually
+- ~use-short-answers t~ use y or n instead of yes and no
+- ~visible-bell t~ flash the screen instead of sounding a bell
 
 #+begin_src elisp :tangle init.el
   (setq
