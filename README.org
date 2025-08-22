@@ -2,14 +2,24 @@
 
 The aim of this repository is to provide a minimal emacs configuration that restricts the use external packages, trying to leverage emacs built-in functionality.
 
-A similar approach of the [[https://github.com/ISouthRain/OpenEmacs][openEmacs]] project, from which I took some ideas. Also [[https://protesilaos.com/][Protesilaos Stavrou]] configuration has been a great inspiration.
+A similar approach to the [[https://github.com/ISouthRain/OpenEmacs][openEmacs]] project, from which I took some ideas. Also [[https://protesilaos.com/][Protesilaos Stavrou]] configuration has been a great inspiration.
 
-This file (README.org) contains the configuration of emacs in a literate programming style, meaning that the code is inside this very file and is /tangled/ into the target file, init.el.
+This file (README.org) contains the configuration of emacs in a literate programming style, meaning that the code is inside this very file and is /tangled/ into the target files.
 
 To do the tangling you invoke `M-x org-babel-tangle` and org-mode (org-babel, to be precise) will produce the `init.el` file
 
 
 ** Built-in emacs configuration
+I want to separate the configuration in two sections, this one should contain only built-in functionality, and should work in /vanilla/ emacs straight out of the box (assuming a fairly recent version of emacs, at the moment of this writing I'm using version 30.1 that comes with debian 13.0 trixie)
+
+I use debian stable since many years as my daily driver, and always update it when a new stable come out. I was used to compile emacs from sources, as the version included in debian stable was too old. But now in trixie there is a fairly current version, enough for my needs at least.
+
+So this section deals with what you can obtain with the stock debian package:
+#+begin_src bash
+  sudo apt install emacs
+#+end_src
+
+
 *** Startup
 Took this bit from prot, to speed up emacs startup time.
 #+begin_src emacs-lisp :tangle early-init.el
@@ -41,7 +51,7 @@ Took this bit from prot, to speed up emacs startup time.
 
 *** Basic configuration
 Here I set some native emacs variables to fine tune its behaviour to how I like it:
-- ~Man-notify-method 'aggressive~ basically opens the man pages invoked by ~M-x man~ in the other window and gives it the focus, so you can read and move inside the man immediatly, eventually hit ~q~ to exit and you are back to where you were before invoking man.
+- ~Man-notify-method 'aggressive~ basically opens the man pages invoked by ~M-x man~ in the other window and gives it the focus, so you can read and move inside the man immediately, eventually hit ~q~ to exit and you are back to where you were before invoking man.
 - ~auto-revert-verbose t~ it shows on the echo area when something outside emacs has changed a file and the buffer has been auto-reverted to what is on disk.
 - ~create-lockfiles nil~ don't create locks starting with ".#" when you edit a file.
 - ~desktop-save t~ saves your open files/buffers when you quit emacs so when you launch emacs again it has all your "desktop" as you left it.
@@ -78,6 +88,8 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
 
   (set-default indent-line-function 'insert-tab)
 
+  ;; send customization to a temp file (prot)
+  (setq custom-file (make-temp-file "emacs-custom-"))
 #+end_src
 
 
@@ -89,7 +101,7 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
   (desktop-save-mode 1)
   (electric-indent-mode 1)
   (electric-pair-mode 1)
-  (fido-vertical-mode 1)
+  (fido-vertical-mode -1)
   (global-auto-revert-mode 1)
   (global-completion-preview-mode 1)
   (menu-bar-mode -1)
@@ -161,6 +173,16 @@ Shows in the title bar the name of the buffer and the last command used.
   (global-set-key [remap dabbrev-expand] 'hippie-expand)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
 #+end_src
+
+*** Save history
+Save the minibuffer history so that
+#+begin_src emacs-lisp :tangle init.el
+  ;; Save history
+  (use-package savehist
+    :ensure nil
+    :hook  (after-init . savehist-mode))
+#+end_src
+
 
 *** Org mode
 #+begin_src elisp :tangle init.el
@@ -271,12 +293,110 @@ Similarly, I have another for ~whitespace-mode~ and one for ~visual-line-mode~
 
 
 
+** Packages available in debian
+
+This section is dedicated to the configuration of packages that are available in debian as separate .deb packages.
+
+For example, for some licensing issues the emacs info manuals are not included with the basic debian package as you would get them if you compile emacs from source, but are instead in the component ~non-free~, that you have to enable in your [[https://wiki.debian.org/SourcesList][apt configuration]].
+
+After that you can install the info manuals with
+
+#+begin_src bash
+  sudo apt install emacs-common-non-dfsg
+#+end_src
+
+Debian repositories offer many other packages whose name begin with ~elpa-*~: those are emacs packages in .deb format, ready to be installed via ~apt~.
+
+`Elpa` is an acronym for /Emacs Lisp Package Archive/, and it contains lots of emacs packages that with a bit of configuration you can install directly from emacs with ~M-x package-install~, but in debian you have the option of installing them as system packages.
+
+Having them as system packages managed by the distro's package manager it's better, in my opinion.
+
+*** Vterm
+Vterm is a complete terminal emulator that unlike ~shell~, ~term~ and ~eshell~ is able to handle any external program output.
+
+To install the debian package:
+#+begin_src bash
+  sudo apt install elpa-vterm
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+  ;; Begin section of debian elpa-* packages
+  
+  ;; sudo apt install elpa-vterm
+  (use-package vterm
+    :ensure nil)
+#+end_src
+
+*** Helpful
+Helpful offers a better Help buffer.
+
+To install the debian package:
+#+begin_src bash
+  sudo apt install elpa-helpful
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+  ;; sudo apt install elpa-helpful
+  (use-package helpful
+    :ensure nil
+    :bind
+    (("C-h f" . helpful-callable)
+      ("C-h v" . helpful-variable)
+      ("C-h k" . helpful-key)))
+#+end_src
+
+
+
+*** Vertico
+Vertico gives a better experience when interacting with the minibuffer.
+
+Install the debian package:
+#+begin_src bash
+  sudo apt install elpa-vertico
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+  ;; sudo apt install elpa-vertico
+  (use-package vertico
+    :ensure nil
+    :hook (after-init . vertico-mode)
+    :bind (:map vertico-map
+            ("DEL" . vertico-directory-delete-char))
+    :custom
+    (vertico-count 10))
+#+end_src
+
+*** Orderless
+TODO
+*** Marginalia
+TODO
+*** Consult
+TODO
+*** Magit
+TODO
+*** Markdown mode
+When you have org-mode markdown seems a step backwards... but sometimes you need to edit markdown files.
+
+Install the debian package:
+#+begin_src bash
+  sudo apt install elpa-markdown-mode
+#+end_src
+
+#+begin_src emacs-lisp :tangle init.el
+  ;; sudo apt install elpa-markdown-mode
+  (use-package markdown-mode
+    :ensure nil)
+#+end_src
+
 ** External packages to possibly include
 
 
+- consult
 - ef-themes
 - magit
-- restclient or verb
+- markdown-mode
 - orderless
+- org-journal
+- restclient or verb
 - vertico
-- consult
+  
