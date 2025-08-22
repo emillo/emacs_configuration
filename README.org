@@ -1,6 +1,6 @@
 * Emacs minimal configuration
 
-The aim of this repository is to provide a minimal emacs configuration that restricts the use external packages trying to leverage emacs built-in functionality.
+The aim of this repository is to provide a minimal emacs configuration that restricts the use external packages, trying to leverage emacs built-in functionality.
 
 A similar approach of the [[https://github.com/ISouthRain/OpenEmacs][openEmacs]] project, from which I took some ideas. Also [[https://protesilaos.com/][Protesilaos Stavrou]] configuration has been a great inspiration.
 
@@ -9,8 +9,35 @@ This file (README.org) contains the configuration of emacs in a literate program
 To do the tangling you invoke `M-x org-babel-tangle` and org-mode (org-babel, to be precise) will produce the `init.el` file
 
 
-
 ** Built-in emacs configuration
+*** Startup
+Took this bit from prot, to speed up emacs startup time.
+#+begin_src emacs-lisp :tangle early-init.el
+  ;; Temporarily increase the garbage collection threshold.  These
+  ;; changes help shave off about half a second of startup time.  The
+  ;; `most-positive-fixnum' is DANGEROUS AS A PERMANENT VALUE.  See the
+  ;; `emacs-startup-hook' a few lines below for what I actually use.
+  (setq gc-cons-threshold most-positive-fixnum
+    gc-cons-percentage 0.5)
+
+  ;; Same idea as above for the `file-name-handler-alist' and the
+  ;; `vc-handled-backends' with regard to startup speed optimisation.
+  ;; Here I am storing the default value with the intent of restoring it
+  ;; via the `emacs-startup-hook'.
+  (defvar prot-emacs--file-name-handler-alist file-name-handler-alist)
+  (defvar prot-emacs--vc-handled-backends vc-handled-backends)
+
+  (setq file-name-handler-alist nil
+    vc-handled-backends nil)
+
+  (add-hook 'emacs-startup-hook
+    (lambda ()
+      (setq gc-cons-threshold (* 100 100 8)
+        gc-cons-percentage 0.1
+        file-name-handler-alist prot-emacs--file-name-handler-alist
+        vc-handled-backends prot-emacs--vc-handled-backends)))
+
+#+end_src
 
 *** Basic configuration
 Here I set some native emacs variables to fine tune its behaviour to how I like it:
