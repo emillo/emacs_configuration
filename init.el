@@ -1,10 +1,16 @@
+;; Emiliano Grilli's Emacs configuration
+
+;; Vanilla emacs section (init.el):
+;; it shoud work without requiring any external package
+;; tested on emacs 30.1 on debian 13 trixie
+
 ;; Setting some variables
 (setq
   Man-notify-method 'aggressive
   auto-revert-verbose t
   create-lockfiles nil
   desktop-save t
-  help-window-select t
+  help-window-select t<>
   inhibit-splash-screen t
   initial-scratch-message nil
   lisp-indent-offset 2
@@ -20,7 +26,7 @@
 
 (set-default indent-line-function 'insert-tab)
 
-;; send customization to a temp file (prot)
+;; send customizations away from init.el (prot)
 (setq custom-file (make-temp-file "emacs-custom-"))
 
 ;; Minor modes
@@ -33,6 +39,7 @@
 (global-auto-revert-mode 1)
 (global-completion-preview-mode 1)
 (menu-bar-mode -1)
+(recentf-mode 1)
 (scroll-bar-mode -1)
 (size-indication-mode 1)
 (tool-bar-mode -1)
@@ -55,6 +62,7 @@
      (agenda-structure . (variable-pitch light 1.8))
      (t . (1.3))))
 (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
+
 (load-theme 'modus-vivendi-tinted)
 
 ;; Font
@@ -87,6 +95,7 @@
 
 ;; Org mode
 (use-package org
+  :ensure nil
   :defer t
   :config
   (setq
@@ -175,29 +184,10 @@
 (global-set-key (kbd "S-<f12>") 'mil/toggle-whitespace)
 (global-set-key (kbd "C-<f12>") 'mil/toggle-visual-line-mode)
 
-;; Begin section of debian elpa-* packages
+;; Loads the section of the configuration dedicated to emacs packages
+;; available in debian, comment the next sexp for disabling it.
 
-;; sudo apt install elpa-vterm
-(use-package vterm
-  :ensure nil)
-
-;; sudo apt install elpa-helpful
-(use-package helpful
-  :ensure nil
-  :bind
-  (("C-h f" . helpful-callable)
-    ("C-h v" . helpful-variable)
-    ("C-h k" . helpful-key)))
-
-;; sudo apt install elpa-vertico
-(use-package vertico
-  :ensure nil
-  :hook (after-init . vertico-mode)
-  :bind (:map vertico-map
-          ("DEL" . vertico-directory-delete-char))
-  :custom
-  (vertico-count 10))
-
-;; sudo apt install elpa-markdown-mode
-(use-package markdown-mode
-  :ensure nil)
+(load-file
+  (concat
+    (file-name-directory load-file-name)
+    "provided-by-debian.el"))

@@ -1,27 +1,37 @@
-* Emacs minimal configuration
+* Emiliano Grilli's emacs configuration
 
-The aim of this repository is to provide a minimal emacs configuration that restricts the use external packages, trying to leverage emacs built-in functionality.
+The aim of this repository is to provide an emacs configuration that where possible leverages emacs built-in functionality, making it easy to bisect into a "vanilla" minimal configuration if needed.
 
-A similar approach to the [[https://github.com/ISouthRain/OpenEmacs][openEmacs]] project, from which I took some ideas. Also [[https://protesilaos.com/][Protesilaos Stavrou]] configuration has been a great inspiration.
+A similar "keep-it-simple" approach to the [[https://github.com/ISouthRain/OpenEmacs][openEmacs]] project, from which I took some ideas. Also [[https://protesilaos.com/][Protesilaos Stavrou]] configuration has been a great inspiration.
 
 This file (README.org) contains the configuration of emacs in a literate programming style, meaning that the code is inside this very file and is /tangled/ into the target files.
 
-To do the tangling you invoke `M-x org-babel-tangle` and org-mode (org-babel, to be precise) will produce the `init.el` file
+To do the tangling you invoke `M-x org-babel-tangle` and org-babel will produce the final ~.el~ files:
+
+- early-init.el
+- init.el
+- provided-by-debian.el
+- provided-by-gnu-nongnu-melpa.el
 
 
 ** Built-in emacs configuration
-I want to separate the configuration in two sections, this one should contain only built-in functionality, and should work in /vanilla/ emacs straight out of the box (assuming a fairly recent version of emacs, at the moment of this writing I'm using version 30.1 that comes with debian 13.0 trixie)
+I'd like to separate the configuration in three sections, this one should contain only built-in functionality, and should work in /vanilla/ emacs straight out of the box (assuming a fairly recent version of emacs, at the moment of this writing I'm using version 30.1 that comes with debian 13.0 trixie). On android for example I want emacs as close to possible to vanilla.
 
-I use debian stable since many years as my daily driver, and always update it when a new stable come out. I was used to compile emacs from sources, as the version included in debian stable was too old. But now in trixie there is a fairly current version, enough for my needs at least.
+I use debian stable since many years as my daily driver GNU/Linux distro, and always update it when a new stable come out. I was used to compile emacs from sources, as the version included in debian stable was too old. But now in trixie there is a fairly current version, good enough for my needs at least.
 
 So this section deals with what you can obtain with the stock debian package:
+
+On debian you install emacs like this:
+
 #+begin_src bash
   sudo apt install emacs
 #+end_src
 
 
 *** Startup
-Took this bit from prot, to speed up emacs startup time.
+
+Took this bit from prot, it goes to ~early-init.el~ to speed up emacs startup time.
+
 #+begin_src emacs-lisp :tangle early-init.el
   ;; Temporarily increase the garbage collection threshold.  These
   ;; changes help shave off about half a second of startup time.  The
@@ -49,8 +59,21 @@ Took this bit from prot, to speed up emacs startup time.
 
 #+end_src
 
+*** Preamble
+#+begin_src elisp :tangle init.el
+  ;; Emiliano Grilli's Emacs configuration
+
+  ;; Vanilla emacs section (init.el):
+  ;; it shoud work without requiring any external package
+  ;; tested on emacs 30.1 on debian 13 trixie
+
+#+end_src
+
+
 *** Basic configuration
+
 Here I set some native emacs variables to fine tune its behaviour to how I like it:
+
 - ~Man-notify-method 'aggressive~ basically opens the man pages invoked by ~M-x man~ in the other window and gives it the focus, so you can read and move inside the man immediately, eventually hit ~q~ to exit and you are back to where you were before invoking man.
 - ~auto-revert-verbose t~ it shows on the echo area when something outside emacs has changed a file and the buffer has been auto-reverted to what is on disk.
 - ~create-lockfiles nil~ don't create locks starting with ".#" when you edit a file.
@@ -65,6 +88,7 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
 - ~use-short-answers t~ use y or n instead of yes and no
 - ~visible-bell t~ flash the screen instead of sounding a bell
 
+
 #+begin_src elisp :tangle init.el
   ;; Setting some variables
   (setq
@@ -72,7 +96,7 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
     auto-revert-verbose t
     create-lockfiles nil
     desktop-save t
-    help-window-select t
+    help-window-select t<>
     inhibit-splash-screen t
     initial-scratch-message nil
     lisp-indent-offset 2
@@ -88,12 +112,16 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
 
   (set-default indent-line-function 'insert-tab)
 
-  ;; send customization to a temp file (prot)
+  ;; send customizations away from init.el (prot)
   (setq custom-file (make-temp-file "emacs-custom-"))
 #+end_src
 
 
 *** Minor modes
+
+Here are some minor modes that I use and some that I disable.
+Note: ~fido-vertical-mode~ may be enabled if you don't use ~vertico~ (below)
+
 #+begin_src elisp :tangle init.el
   ;; Minor modes
   (column-number-mode 1)
@@ -105,6 +133,7 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
   (global-auto-revert-mode 1)
   (global-completion-preview-mode 1)
   (menu-bar-mode -1)
+  (recentf-mode 1)
   (scroll-bar-mode -1)
   (size-indication-mode 1)
   (tool-bar-mode -1)
@@ -130,6 +159,7 @@ Here basically I add the /backtick/ ("`") to the list of characters that electri
 Here I use two of the built-in [[https://protesilaos.com/emacs/modus-themes][modus-themes]] made by [[https://protesilaos.com/][Protesilaos Stavrou]], very clean and professional. And thoroughly documented in [[info:modus-themes#Top][its info manual]].
 
 These themes allow you to use variable pitch fonts, which give you bigger fonts on GUI emacs for titles, org headings, and so on. Nice.
+
 #+begin_src elisp :tangle init.el
   ;; Theme
   (setq modus-themes-headings
@@ -139,6 +169,7 @@ These themes allow you to use variable pitch fonts, which give you bigger fonts 
        (agenda-structure . (variable-pitch light 1.8))
        (t . (1.3))))
   (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
+
   (load-theme 'modus-vivendi-tinted)
 
   ;; Font
@@ -152,7 +183,11 @@ These themes allow you to use variable pitch fonts, which give you bigger fonts 
 
 
 *** Window title
+
 Shows in the title bar the name of the buffer and the last command used.
+
+Took this from openEmacs.
+
 #+begin_src elisp :tangle init.el
   (setq frame-title-format
     '(:eval (format "Emacs - %s  [ %s ]"
@@ -160,7 +195,6 @@ Shows in the title bar the name of the buffer and the last command used.
               last-command))
     icon-title-format t)
 #+end_src
-
 
 *** Key bindings
 #+begin_src elisp :tangle init.el
@@ -175,7 +209,9 @@ Shows in the title bar the name of the buffer and the last command used.
 #+end_src
 
 *** Save history
-Save the minibuffer history so that
+
+Save the minibuffer history so that it survives between emacs sessions.
+
 #+begin_src emacs-lisp :tangle init.el
   ;; Save history
   (use-package savehist
@@ -185,9 +221,13 @@ Save the minibuffer history so that
 
 
 *** Org mode
+
+Minimalistic config, for the moment.
+
 #+begin_src elisp :tangle init.el
   ;; Org mode
   (use-package org
+    :ensure nil
     :defer t
     :config
     (setq
@@ -205,7 +245,11 @@ Save the minibuffer history so that
 
 
 *** Italian calendar/diary localization
+
+As I'm italian, I need some customization to make calendar/diary read in my language.
+
 Here I have some very old code for localization of the calendar/diary experience in Italian; I don't know if there is a more modern/better way to do it...
+
 #+begin_src elisp :tangle init.el
   ;; Italian calendar names
   (setq calendar-week-start-day 1
@@ -259,6 +303,7 @@ Here I have some very old code for localization of the calendar/diary experience
 #+end_src
 
 *** Custom toggles for white space mode and line numbers
+
 I generally don't want line numbers on everything, so I have a quick one key toggle for enabling ~display-line-numbers-mode~ in the current buffer.
 
 Similarly, I have another for ~whitespace-mode~ and one for ~visual-line-mode~
@@ -291,13 +336,11 @@ Similarly, I have another for ~whitespace-mode~ and one for ~visual-line-mode~
 #+end_src
 
 
-
-
 ** Packages available in debian
 
 This section is dedicated to the configuration of packages that are available in debian as separate .deb packages.
 
-For example, for some licensing issues the emacs info manuals are not included with the basic debian package as you would get them if you compile emacs from source, but are instead in the component ~non-free~, that you have to enable in your [[https://wiki.debian.org/SourcesList][apt configuration]].
+For example, for some licensing issues the emacs info manuals are not included with the basic emacs debian package as you would get them if you compile emacs from source, but are instead in the component ~non-free~, that you have to enable in your [[https://wiki.debian.org/SourcesList][apt configuration]].
 
 After that you can install the info manuals with
 
@@ -309,33 +352,60 @@ Debian repositories offer many other packages whose name begin with ~elpa-*~: th
 
 `Elpa` is an acronym for /Emacs Lisp Package Archive/, and it contains lots of emacs packages that with a bit of configuration you can install directly from emacs with ~M-x package-install~, but in debian you have the option of installing them as system packages.
 
-Having them as system packages managed by the distro's package manager it's better, in my opinion.
+Having them as system packages managed by the debian package manager in my opinion it's better for various reasons:
+
+- If a package entered debian the community judged it deserved to be in, and it's a good thing.
+- Each user in the system have the package whithout having to install it from outside.
+- Stability: instead of the latest and greatest you have the working one.
+- You don't have conflicting versions of a package in your emacs directory.
+- You don't have to compile dependecies manually (eg. libvterm).
+- Dependencies are managed by the system.
+
+*** Including the next section
+#+begin_src elisp :tangle init.el
+  ;; Loads the section of the configuration dedicated to emacs packages
+  ;; available in debian, comment the next sexp for disabling it.
+
+  (load-file
+    (concat
+      (file-name-directory load-file-name)
+      "provided-by-debian.el"))
+#+end_src
 
 *** Vterm
+
 Vterm is a complete terminal emulator that unlike ~shell~, ~term~ and ~eshell~ is able to handle any external program output.
 
 To install the debian package:
+
 #+begin_src bash
   sudo apt install elpa-vterm
 #+end_src
 
-#+begin_src emacs-lisp :tangle init.el
-  ;; Begin section of debian elpa-* packages
-  
+Emacs lisp configuration:
+
+#+begin_src emacs-lisp :tangle provided-by-debian.el
+  ;; Begin section of emacs packages available in debian
+  ;; usually they begin with elpa-*
+
   ;; sudo apt install elpa-vterm
   (use-package vterm
     :ensure nil)
 #+end_src
 
 *** Helpful
+
 Helpful offers a better Help buffer.
 
 To install the debian package:
+
 #+begin_src bash
   sudo apt install elpa-helpful
 #+end_src
 
-#+begin_src emacs-lisp :tangle init.el
+Emacs lisp configuration:
+
+#+begin_src emacs-lisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-helpful
   (use-package helpful
     :ensure nil
@@ -345,17 +415,18 @@ To install the debian package:
       ("C-h k" . helpful-key)))
 #+end_src
 
-
-
 *** Vertico
 Vertico gives a better experience when interacting with the minibuffer.
 
-Install the debian package:
+To install the debian package:
+
 #+begin_src bash
   sudo apt install elpa-vertico
 #+end_src
 
-#+begin_src emacs-lisp :tangle init.el
+Emacs lisp configuration:
+
+#+begin_src emacs-lisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-vertico
   (use-package vertico
     :ensure nil
@@ -367,13 +438,84 @@ Install the debian package:
 #+end_src
 
 *** Orderless
-TODO
+Orderless allow you to search regardless of the order of your search terms.
+
+To install the debian package:
+
+#+begin_src bash
+  sudo apt install elpa-orderless
+#+end_src
+
+Emacs lisp configuration:
+
+#+begin_src emacs-lisp :tangle provided-by-debian.el
+  ;; sudo apt install elpa-orderless
+  (use-package orderless
+    :ensure nil
+    :config
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+#+end_src
+
 *** Marginalia
-TODO
+
+Marginalia adds useful in-line docs/information in the minibuffer for each of the candidates.
+
+To install the debian package:
+
+#+begin_src bash
+  sudo apt install elpa-marginalia
+#+end_src
+
+Emacs lisp configuration:
+
+#+begin_src emacs-lisp :tangle provided-by-debian.el
+  ;; sudo apt install elpa-marginalia
+  (use-package marginalia
+    :ensure nil
+    :hook (after-init . marginalia-mode))
+#+end_src
+
 *** Consult
-TODO
+
+Consult provides enhanced replacements for common command such find-file, switch-to-buffer, grep, etc.. and you can see the preview of the thing you are choosing.
+
+To install the debian package:
+
+#+begin_src bash
+  sudo apt install elpa-consult
+#+end_src
+
+Emacs lisp configuration:
+
+#+begin_src emacs-lisp :tangle provided-by-debian.el
+  ;; sudo apt install elpa-consult
+  (use-package consult
+    :ensure nil
+    :bind(([remap switch-to-buffer] . consult-buffer)))
+#+end_src
+
 *** Magit
-TODO
+Emacs vanilla already has excellent version control capabilities, but if you use git as vcs, magit is one of the best if not the best user interfaces available.
+
+To install the debian package:
+
+#+begin_src bash
+  sudo apt install elpa-magit
+#+end_src
+
+Emacs lisp configuration:
+
+#+begin_src emacs-lisp :tangle provided-by-debian.el
+  ;; sudo apt install elpa-magit
+  (use-package magit
+    :ensure nil
+    :bind
+    ("<f9>" . magit-status))
+#+end_src
+
+
 *** Markdown mode
 When you have org-mode markdown seems a step backwards... but sometimes you need to edit markdown files.
 
@@ -382,21 +524,54 @@ Install the debian package:
   sudo apt install elpa-markdown-mode
 #+end_src
 
-#+begin_src emacs-lisp :tangle init.el
+#+begin_src emacs-lisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-markdown-mode
   (use-package markdown-mode
     :ensure nil)
 #+end_src
+*** Expand region
+TODO
+*** nov ebook reader
+TODO
+*** ledger mode
+TODO
 
-** External packages to possibly include
+** Packages from external repositories
 
+This section is for packages that aren't present in debian but are useful (to me).
 
-- consult
-- ef-themes
-- magit
-- markdown-mode
-- orderless
-- org-journal
-- restclient or verb
-- vertico
+There are three main package archives that host emacs packages: *gnu* (elpa), *nongnu* which are usually natively configured in emacs, and *melpa* which is sort of an "unofficial" but huge repo.
+
+*** Including the next section
+#+begin_src elisp :tangle provided-by-debian.el
+  ;; Loads the section of the configuration dedicated to emacs packages
+  ;; available in gnu/nongnu/melpa, comment the next sexp for disabling it.
+
+  (load-file
+    (concat
+      (file-name-directory load-file-name)
+      "provided-by-gnu-nongnu-melpa.el"))
+#+end_src
+
+*** Configure the packages archives
+
+#+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
+  (setq package-archives
+    '(("gnu" . "https://elpa.gnu.org/packages/")
+       ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+       ("melpa" . "https://melpa.org/packages/")))
+#+end_src
+
   
+*** ef-themes
+TODO
+*** org-journal
+TODO
+*** restclient or verb
+TODO
+*** dired-subtree
+TODO
+*** scratch
+TODO
+*** drag-stuf
+TODO
