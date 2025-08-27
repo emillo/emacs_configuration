@@ -10,7 +10,7 @@
   auto-revert-verbose t
   create-lockfiles nil
   desktop-save t
-  help-window-select t<>
+  help-window-select t
   inhibit-splash-screen t
   initial-scratch-message nil
   lisp-indent-offset 2

@@ -96,7 +96,7 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
     auto-revert-verbose t
     create-lockfiles nil
     desktop-save t
-    help-window-select t<>
+    help-window-select t
     inhibit-splash-screen t
     initial-scratch-message nil
     lisp-indent-offset 2
