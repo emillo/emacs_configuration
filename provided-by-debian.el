@@ -5,6 +5,12 @@
 (use-package vterm
   :ensure nil)
 
+;; sudo apt install elpa-magit
+(use-package magit
+  :ensure nil
+  :bind
+  ("<f9>" . magit-status))
+
 ;; sudo apt install elpa-helpful
 (use-package helpful
   :ensure nil
@@ -38,16 +44,21 @@
 ;; sudo apt install elpa-consult
 (use-package consult
   :ensure nil
-  :bind(([remap switch-to-buffer] . consult-buffer)))
+  :bind
+  (([remap switch-to-buffer] . consult-buffer)))
 
-;; sudo apt install elpa-magit
-(use-package magit
+;; sudo apt install elpa-expand-region
+(use-package expand-region
   :ensure nil
   :bind
-  ("<f9>" . magit-status))
+  ("M-@" . er/expand-region))
 
 ;; sudo apt install elpa-markdown-mode
 (use-package markdown-mode
+  :ensure nil)
+
+;; sudo apt install elpa-ledger
+(use-package ledger-mode
   :ensure nil)
 
 ;; Loads the section of the configuration dedicated to emacs packages

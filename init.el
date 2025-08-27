@@ -8,6 +8,7 @@
 (setq
   Man-notify-method 'aggressive
   auto-revert-verbose t
+  auto-save-default nil
   create-lockfiles nil
   desktop-save t
   help-window-select t
@@ -40,6 +41,7 @@
 (global-completion-preview-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
+(repeat-mode 1)
 (scroll-bar-mode -1)
 (size-indication-mode 1)
 (tool-bar-mode -1)
@@ -79,6 +81,31 @@
             last-command))
   icon-title-format t)
 
+;; Windmove
+(defun windmove-prefix ()
+  (interactive)
+  (set-transient-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "<left>") 'windmove-left)
+      (define-key map (kbd "<right>") 'windmove-right)
+      (define-key map (kbd "<up>") 'windmove-up)
+      (define-key map (kbd "<down>") 'windmove-down) map)
+    t nil "Repeat with %k"))
+
+(define-key (current-global-map) (kbd "C-x w m") 'windmove-prefix)
+
+(defun windmove-swap-prefix ()
+  (interactive)
+  (set-transient-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "<left>") 'windmove-swap-states-left)
+      (define-key map (kbd "<right>") 'windmove-swap-states-right)
+      (define-key map (kbd "<up>") 'windmove-swap-states-up)
+      (define-key map (kbd "<down>") 'windmove-swap-states-down) map)
+    nil))
+
+(define-key (current-global-map) (kbd "C-x w p") 'windmove-swap-prefix)
+
 ;; Key bindings
 (global-set-key (kbd "C-;") 'comment-line)
 (global-set-key (kbd "M-o") 'other-window)
@@ -87,6 +114,7 @@
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "M-+") 'mark-word)
 
 ;; Save history
 (use-package savehist
