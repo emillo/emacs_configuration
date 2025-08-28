@@ -14,6 +14,12 @@
        (agenda-structure variable-pitch light 1.6)
        (t variable-pitch))))
 
+(use-package restclient
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.restclient\\'" . restclient-mode))
+  (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode)))
+
 (use-package dired-subtree
   :ensure t
   :after dired

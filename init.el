@@ -213,9 +213,5 @@
 (global-set-key (kbd "C-<f12>") 'mil/toggle-visual-line-mode)
 
 ;; Loads the section of the configuration dedicated to emacs packages
-;; available in debian, comment the next sexp for disabling it.
-
-(load-file
-  (concat
-    (file-name-directory load-file-name)
-    "provided-by-debian.el"))
+;; available in debian, comment the next line for disabling it.
+(load-file (locate-user-emacs-file "provided-by-debian.el"))

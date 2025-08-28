@@ -401,12 +401,8 @@ Having them as system packages managed by the debian package manager in my opini
 *** Including the next section
 #+begin_src elisp :tangle init.el
   ;; Loads the section of the configuration dedicated to emacs packages
-  ;; available in debian, comment the next sexp for disabling it.
-
-  (load-file
-    (concat
-      (file-name-directory load-file-name)
-      "provided-by-debian.el"))
+  ;; available in debian, comment the next line for disabling it.
+  (load-file (locate-user-emacs-file "provided-by-debian.el"))
 #+end_src
 
 *** Vterm
@@ -629,12 +625,8 @@ There are three main package archives that host emacs packages: *gnu* (elpa), *n
 *** Including the next section
 #+begin_src elisp :tangle provided-by-debian.el
   ;; Loads the section of the configuration dedicated to emacs packages
-  ;; available in gnu/nongnu/melpa, comment the next sexp for disabling it.
-
-  (load-file
-    (concat
-      (file-name-directory load-file-name)
-      "provided-by-gnu-nongnu-melpa.el"))
+  ;; available in gnu/nongnu/melpa, comment the next line for disabling it.
+  (load-file (locate-user-emacs-file "provided-by-gnu-nongnu-melpa.el"))
 #+end_src
 
 *** Configure the packages archives
@@ -665,8 +657,17 @@ A great set of themes from prot, more colorful than modus-themes, I particularly
 
 *** Org-journal
 TODO
-*** Restclient or verb
-TODO
+*** Restclient
+Restclient is a handy package to make REST calls. Very useful to test out remote APIs.
+
+#+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
+  (use-package restclient
+    :ensure t
+    :init
+    (add-to-list 'auto-mode-alist '("\\.restclient\\'" . restclient-mode))
+    (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode)))
+#+end_src
+
 *** Multiple-cursors
 TODO
 *** Dired-subtree

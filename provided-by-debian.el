@@ -62,9 +62,5 @@
   :ensure nil)
 
 ;; Loads the section of the configuration dedicated to emacs packages
-;; available in gnu/nongnu/melpa, comment the next sexp for disabling it.
-
-(load-file
-  (concat
-    (file-name-directory load-file-name)
-    "provided-by-gnu-nongnu-melpa.el"))
+;; available in gnu/nongnu/melpa, comment the next line for disabling it.
+(load-file (locate-user-emacs-file "provided-by-gnu-nongnu-melpa.el"))
