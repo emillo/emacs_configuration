@@ -6,21 +6,45 @@
   :ensure nil
   :pin manual)
 
-;; sudo apt install elpa-magit
+;; sudo apt install elpa-magit elpa-magit-section elpa-transient elpa-llama elpa-with-editor
 (use-package magit
   :ensure nil
   :pin manual
   :bind
   ("<f9>" . magit-status))
 
-;; sudo apt install elpa-format-all
+(use-package magit-section
+  :ensure nil
+  :pin manual)
+
+(use-package transient
+  :ensure nil
+  :pin manual)
+
+(use-package llama
+  :ensure nil
+  :pin manual)
+
+(use-package with-editor
+  :ensure nil
+  :pin manual)
+
+;; sudo apt install elpa-format-all elpa-inheritenv elpa-language-id
 (use-package format-all
   :ensure nil
   :pin manual
   :bind
   ("M-F" . format-all-buffer))
 
-;; sudo apt install elpa-helpful
+(use-package inheritenv
+  :ensure nil
+  :pin manual)
+
+(use-package language-id
+  :ensure nil
+  :pin manual)
+
+;; sudo apt install elpa-helpful elpa-dash elpa-f elpa-s elpa-elisp-refs
 (use-package helpful
   :ensure nil
   :pin manual
@@ -28,6 +52,22 @@
   (("C-h f" . helpful-callable)
     ("C-h v" . helpful-variable)
     ("C-h k" . helpful-key)))
+
+(use-package s
+  :ensure nil
+  :pin manual)
+
+(use-package f
+  :ensure nil
+  :pin manual)
+
+(use-package dash
+  :ensure nil
+  :pin manual)
+
+(use-package elisp-refs
+  :ensure nil
+  :pin manual)
 
 ;; sudo apt install elpa-vertico
 (use-package vertico

@@ -14,6 +14,22 @@
        (agenda-structure variable-pitch light 1.6)
        (t variable-pitch))))
 
+(use-package org-journal
+  :ensure t
+  :after org
+  :pin nongnu
+  :custom
+  (org-journal-dir (concat (file-name-as-directory org-directory) "journal"))
+  (org-journal-file-type 'yearly)
+  (org-journal-file-format "%Y.org")
+  (org-journal-date-format "%A, %d-%m-%Y")
+  (org-journal-encrypt-journal nil)
+  (org-journal-enable-encryption nil)
+  (org-journal-enable-agenda-integration t)
+  (org-extend-today-until 4)
+  :bind
+  ("C-c j" . org-journal-new-entry))
+
 (use-package restclient
   :ensure t
   :init

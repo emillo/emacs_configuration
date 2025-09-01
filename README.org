@@ -141,6 +141,7 @@ Note: ~fido-vertical-mode~ may be enabled if you don't use ~vertico~ (below)
   (size-indication-mode 1)
   (tool-bar-mode -1)
   (tooltip-mode -1)
+  (visual-line-mode 1)
   (which-key-mode 1)
 #+end_src
 
@@ -360,6 +361,7 @@ Similarly, I have another for ~whitespace-mode~ and one for ~visual-line-mode~
     (if (bound-and-true-p whitespace-mode)
       (whitespace-mode -1)
       (whitespace-mode 1)))
+
   (defun mil/toggle-visual-line-mode (args)
     "toggles visual-line-mode"
     (interactive "P")
@@ -432,57 +434,83 @@ Emacs lisp configuration:
 *** Magit
 Emacs vanilla already has excellent version control capabilities, but if you use git as vcs, magit is one of the best if not the best user interfaces available.
 
-To install the debian package:
+To install the debian package and its dependencies:
 
 #+begin_src bash
-  sudo apt install elpa-magit
+  sudo apt install elpa-magit elpa-magit-section elpa-transient elpa-llama elpa-with-editor
 #+end_src
 
 Emacs lisp configuration:
 
 #+begin_src elisp :tangle provided-by-debian.el
-  ;; sudo apt install elpa-magit
+  ;; sudo apt install elpa-magit elpa-magit-section elpa-transient elpa-llama elpa-with-editor
   (use-package magit
     :ensure nil
     :pin manual
     :bind
     ("<f9>" . magit-status))
+
+  (use-package magit-section
+    :ensure nil
+    :pin manual)
+
+  (use-package transient
+    :ensure nil
+    :pin manual)
+
+  (use-package llama
+    :ensure nil
+    :pin manual)
+
+  (use-package with-editor
+    :ensure nil
+    :pin manual)
+
 #+end_src
+
 
 
 *** Format all
 Auto formatting of source code in many languages.
 
-Install the debian package:
+Install the debian package and its dependencies:
 #+begin_src bash
-  sudo apt install elpa-format-all
+  sudo apt install elpa-format-all elpa-inheritenv elpa-language-id
 #+end_src
 
 Emacs lisp configuration:
 
 #+begin_src elisp :tangle provided-by-debian.el
-  ;; sudo apt install elpa-format-all
+  ;; sudo apt install elpa-format-all elpa-inheritenv elpa-language-id
   (use-package format-all
     :ensure nil
     :pin manual
     :bind
     ("M-F" . format-all-buffer))
+
+  (use-package inheritenv
+    :ensure nil
+    :pin manual)
+
+  (use-package language-id
+    :ensure nil
+    :pin manual)
 #+end_src
 
 *** Helpful
 
 Helpful offers a better Help buffer.
 
-To install the debian package:
+To install the debian package and its dependencies:
 
 #+begin_src bash 
-  sudo apt install elpa-helpful
+  sudo apt install elpa-helpful elpa-dash elpa-f elpa-s elpa-elisp-refs
 #+end_src
 
 Emacs lisp configuration:
 
 #+begin_src elisp :tangle provided-by-debian.el
-  ;; sudo apt install elpa-helpful
+  ;; sudo apt install elpa-helpful elpa-dash elpa-f elpa-s elpa-elisp-refs
   (use-package helpful
     :ensure nil
     :pin manual
@@ -490,6 +518,22 @@ Emacs lisp configuration:
     (("C-h f" . helpful-callable)
       ("C-h v" . helpful-variable)
       ("C-h k" . helpful-key)))
+
+  (use-package s
+    :ensure nil
+    :pin manual)
+
+  (use-package f
+    :ensure nil
+    :pin manual)
+
+  (use-package dash
+    :ensure nil
+    :pin manual)
+
+  (use-package elisp-refs
+    :ensure nil
+    :pin manual)
 #+end_src
 
 *** Vertico
@@ -629,6 +673,10 @@ To install the debian package:
     :pin manual)
 #+end_src
 
+*** TODO Org roam
+
+*** TODO Corfu
+
 ** Packages from external repositories
 
 This section is for packages that aren't present in debian but are useful (to me).
@@ -669,7 +717,27 @@ A great set of themes from prot, more colorful than modus-themes, I particularly
 #+end_src
 
 *** Org-journal
-TODO
+Org journal helps keeping a journal in org mode, integrated with the emacs calendar.
+
+#+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
+  (use-package org-journal
+    :ensure t
+    :after org
+    :pin nongnu
+    :custom
+    (org-journal-dir (concat (file-name-as-directory org-directory) "journal"))
+    (org-journal-file-type 'yearly)
+    (org-journal-file-format "%Y.org")
+    (org-journal-date-format "%A, %d-%m-%Y")
+    (org-journal-encrypt-journal nil)
+    (org-journal-enable-encryption nil)
+    (org-journal-enable-agenda-integration t)
+    (org-extend-today-until 4)
+    :bind
+    ("C-c j" . org-journal-new-entry))
+
+#+end_src
+
 *** Restclient
 Restclient is a handy package to make REST calls. Very useful to test out remote APIs.
 
@@ -681,8 +749,8 @@ Restclient is a handy package to make REST calls. Very useful to test out remote
     (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode)))
 #+end_src
 
-*** Multiple-cursors
-TODO
+*** TODO Multiple-cursors
+
 *** Dired-subtree
 From [[https://protesilaos.com/emacs/dotemacs#h:3a4a29bc-3491-4d01-9d64-1cef63b3116a][prot config file]] a nice enhancement to dired: you can expand subdirectories with <TAB>.
 
@@ -718,4 +786,4 @@ Produces a new empty buffer with the same mode of the one you're on.
     (add-to-list 'drag-stuff-except-modes 'org-mode)
     :hook (after-init . drag-stuff-global-mode))
 #+end_src
-*** Super-save
+

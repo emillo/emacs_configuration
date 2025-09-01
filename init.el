@@ -46,6 +46,7 @@
 (size-indication-mode 1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
+(visual-line-mode 1)
 (which-key-mode 1)
 
 ;; Electric pair also for backtick
@@ -201,6 +202,7 @@
   (if (bound-and-true-p whitespace-mode)
     (whitespace-mode -1)
     (whitespace-mode 1)))
+
 (defun mil/toggle-visual-line-mode (args)
   "toggles visual-line-mode"
   (interactive "P")
