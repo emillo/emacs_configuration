@@ -3,17 +3,20 @@
 
 ;; sudo apt install elpa-vterm
 (use-package vterm
-  :ensure nil)
+  :ensure nil
+  :pin manual)
 
 ;; sudo apt install elpa-magit
 (use-package magit
   :ensure nil
+  :pin manual
   :bind
   ("<f9>" . magit-status))
 
 ;; sudo apt install elpa-helpful
 (use-package helpful
   :ensure nil
+  :pin manual
   :bind
   (("C-h f" . helpful-callable)
     ("C-h v" . helpful-variable)
@@ -22,6 +25,7 @@
 ;; sudo apt install elpa-vertico
 (use-package vertico
   :ensure nil
+  :pin manual
   :hook (after-init . vertico-mode)
   :bind (:map vertico-map
           ("DEL" . vertico-directory-delete-char))
@@ -31,6 +35,7 @@
 ;; sudo apt install elpa-orderless
 (use-package orderless
   :ensure nil
+  :pin manual
   :config
 (setq completion-styles '(orderless basic)
       completion-category-defaults nil
@@ -39,27 +44,32 @@
 ;; sudo apt install elpa-marginalia
 (use-package marginalia
   :ensure nil
+  :pin manual
   :hook (after-init . marginalia-mode))
 
 ;; sudo apt install elpa-consult
 (use-package consult
   :ensure nil
+  :pin manual
   :bind
   (([remap switch-to-buffer] . consult-buffer)))
 
 ;; sudo apt install elpa-expand-region
 (use-package expand-region
   :ensure nil
+  :pin manual
   :bind
   ("M-@" . er/expand-region))
 
 ;; sudo apt install elpa-markdown-mode
 (use-package markdown-mode
-  :ensure nil)
+  :ensure nil
+  :pin manual)
 
 ;; sudo apt install elpa-ledger
 (use-package ledger-mode
-  :ensure nil)
+  :ensure nil
+  :pin manual)
 
 ;; Loads the section of the configuration dedicated to emacs packages
 ;; available in gnu/nongnu/melpa, comment the next line for disabling it.
