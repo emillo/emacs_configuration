@@ -32,7 +32,7 @@ On debian you install emacs like this:
 
 Took this bit from prot, it goes to ~early-init.el~ to speed up emacs startup time.
 
-#+begin_src emacs-lisp :tangle early-init.el
+#+begin_src elisp :tangle early-init.el
   ;; Temporarily increase the garbage collection threshold.  These
   ;; changes help shave off about half a second of startup time.  The
   ;; `most-positive-fixnum' is DANGEROUS AS A PERMANENT VALUE.  See the
@@ -249,7 +249,7 @@ Usually I move into other window with `C-x o` but sometimes useful to move preci
 
 Save the minibuffer history so that it survives between emacs sessions.
 
-#+begin_src emacs-lisp :tangle init.el
+#+begin_src elisp :tangle init.el
   ;; Save history
   (use-package savehist
     :ensure nil
@@ -419,7 +419,7 @@ To install the debian package:
 
 Emacs lisp configuration:
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; Begin section of emacs packages available in debian
   ;; usually they begin with elpa-*
 
@@ -440,7 +440,7 @@ To install the debian package:
 
 Emacs lisp configuration:
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-magit
   (use-package magit
     :ensure nil
@@ -460,7 +460,7 @@ Install the debian package:
 
 Emacs lisp configuration:
 
-#+begin_src elisp
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-format-all
   (use-package format-all
     :ensure nil
@@ -475,13 +475,13 @@ Helpful offers a better Help buffer.
 
 To install the debian package:
 
-#+begin_src bash
+#+begin_src bash 
   sudo apt install elpa-helpful
 #+end_src
 
 Emacs lisp configuration:
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-helpful
   (use-package helpful
     :ensure nil
@@ -503,7 +503,7 @@ To install the debian package:
 
 Emacs lisp configuration:
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-vertico
   (use-package vertico
     :ensure nil
@@ -526,7 +526,7 @@ To install the debian package:
 
 Emacs lisp configuration:
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-orderless
   (use-package orderless
     :ensure nil
@@ -549,7 +549,7 @@ To install the debian package:
 
 Emacs lisp configuration:
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-marginalia
   (use-package marginalia
     :ensure nil
@@ -569,7 +569,7 @@ To install the debian package:
 
 Emacs lisp configuration:
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-consult
   (use-package consult
     :ensure nil
@@ -588,7 +588,7 @@ To install the debian package:
   sudo apt install elpa-expand-region
 #+end_src
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-expand-region
   (use-package expand-region
     :ensure nil
@@ -607,7 +607,7 @@ Install the debian package:
 
 Emacs lisp configuration:
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-markdown-mode
   (use-package markdown-mode
     :ensure nil
@@ -622,7 +622,7 @@ To install the debian package:
   sudo apt install elpa-ledger
 #+end_src
 
-#+begin_src emacs-lisp :tangle provided-by-debian.el
+#+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-ledger
   (use-package ledger-mode
     :ensure nil

@@ -13,6 +13,13 @@
   :bind
   ("<f9>" . magit-status))
 
+;; sudo apt install elpa-format-all
+(use-package format-all
+  :ensure nil
+  :pin manual
+  :bind
+  ("M-F" . format-all-buffer))
+
 ;; sudo apt install elpa-helpful
 (use-package helpful
   :ensure nil
