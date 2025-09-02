@@ -99,7 +99,20 @@
   :ensure nil
   :pin manual
   :bind
-  (([remap switch-to-buffer] . consult-buffer)))
+  (([remap switch-to-buffer] . consult-buffer)
+    ([remap goto-line] . consult-goto-line)
+    ([remap project-switch-to-buffer] . consult-project-buffer)
+    ([remap yank-pop] . consult-yank-pop)
+    ([remap bookmark-jump] . consult-bookmark)
+    ("M-g o" . consult-outline)
+    ("M-s g" . consult-grep)
+    ("M-s G" . consult-git-grep)
+    ("M-s r" . consult-ripgrep)
+    ("M-s l" . consult-line)
+    ("M-s L" . consult-line-multi)
+    ("M-s k" . consult-keep-lines)
+    ("M-s u" . consult-focus-lines)
+    ("M-s l" . consult-line)))
 
 ;; sudo apt install elpa-expand-region
 (use-package expand-region
