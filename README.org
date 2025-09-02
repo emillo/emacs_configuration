@@ -856,3 +856,5 @@ Produces a new empty buffer with the same mode of the one you're on.
 #+end_src
 
 *** TODO String inflection
+*** TODO Chordpro mode
+*** TODO Abc mode
