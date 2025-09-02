@@ -747,9 +747,33 @@ Restclient is a handy package to make REST calls. Very useful to test out remote
     :init
     (add-to-list 'auto-mode-alist '("\\.restclient\\'" . restclient-mode))
     (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode)))
+
+  (use-package ob-restclient
+    :ensure t)
 #+end_src
 
-*** TODO Multiple-cursors
+*** Multiple-cursors
+Multiple cursors lets you edit mutliple lines ad once.
+#+begin_src elisp
+  (use-package multiple-cursors
+    :ensure t
+    :pin nongnu
+    :init
+    (defun multiple-cursors-prefix ()
+      (interactive)
+      (set-transient-map
+        (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "n") 'mc/mark-next-like-this)
+          (define-key map (kbd "p") 'mc/mark-previous-like-this)
+          (define-key map (kbd "a") 'mc/mark-all-like-this) map)
+        t nil "Repeat with %k"))
+
+    (define-key (current-global-map) (kbd "C-x n") 'multiple-cursors-prefix)
+
+    :bind
+    (("C-c u" . mc/edit-lines)))
+#+end_src
+
 
 *** Dired-subtree
 From [[https://protesilaos.com/emacs/dotemacs#h:3a4a29bc-3491-4d01-9d64-1cef63b3116a][prot config file]] a nice enhancement to dired: you can expand subdirectories with <TAB>.

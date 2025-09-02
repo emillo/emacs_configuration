@@ -36,6 +36,9 @@
   (add-to-list 'auto-mode-alist '("\\.restclient\\'" . restclient-mode))
   (add-to-list 'auto-mode-alist '("\\.rest\\'" . restclient-mode)))
 
+(use-package ob-restclient
+  :ensure t)
+
 (use-package dired-subtree
   :ensure t
   :after dired
