@@ -263,22 +263,23 @@ Save the minibuffer history so that it survives between emacs sessions.
 Minimalistic config, for the moment.
 
 #+begin_src elisp :tangle init.el
-  ;; Org mode
-  (use-package org
-    :ensure nil
-    :defer t
-    :config
-    (setq
-      org-agenda-include-diary t
-      org-confirm-babel-evaluate nil
-      org-ctrl-k-protect-subtree t
-      org-cycle-separator-lines 0
-      org-ellipsis " ⤵"
-      org-hide-emphasis-markers t
-      org-log-done 'time
-      org-startup-indented t
-      org-startup-folded 'showall))
-
+      ;; Org mode
+      (use-package org
+        :ensure nil
+        :defer t
+        :config
+        (setq
+          org-agenda-include-diary t
+          org-confirm-babel-evaluate nil
+          org-ctrl-k-protect-subtree t
+          org-cycle-separator-lines 0
+          org-ellipsis " ⤵"
+          org-hide-emphasis-markers t
+          org-log-done 'time
+          org-startup-indented t
+          org-startup-folded 'showall)
+        :bind
+        ("C-c l" . org-store-link))
 #+end_src
 
 
