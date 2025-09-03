@@ -39,6 +39,7 @@
 (fido-vertical-mode -1)
 (global-auto-revert-mode 1)
 (global-completion-preview-mode 1)
+(global-visual-line-mode 1)
 (menu-bar-mode -1)
 (recentf-mode 1)
 (repeat-mode 1)
@@ -46,7 +47,6 @@
 (size-indication-mode 1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
-(visual-line-mode 1)
 (which-key-mode 1)
 
 ;; Electric pair also for backtick
