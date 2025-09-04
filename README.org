@@ -727,7 +727,24 @@ Emacs lisp configuration:
     ("C-c n c" . org-roam-capture))
 #+end_src
 
-*** TODO Corfu
+*** Corfu
+To install the debian package:
+
+#+begin_src bash
+  sudo apt install elpa-corfu
+#+end_src
+
+#+begin_src elisp :tangle provided-by-debian.el
+  ;; sudo apt install elpa-corfu
+  (use-package corfu
+    :ensure nil
+    :pin manual
+    :hook (after-init . global-corfu-mode)
+    :bind (:map corfu-map ("<tab>" . corfu-complete))
+    :config
+    (setq cofru-popupinfo-delay '(1.25 . 0.5)))
+#+end_src
+
 
 *** TODO Deft
 

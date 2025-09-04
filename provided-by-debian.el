@@ -144,6 +144,15 @@
   ("C-c n i" . org-roam-node-insert)
   ("C-c n c" . org-roam-capture))
 
+;; sudo apt install elpa-corfu
+(use-package corfu
+  :ensure nil
+  :pin manual
+  :hook (after-init . global-corfu-mode)
+  :bind (:map corfu-map ("<tab>" . corfu-complete))
+  :config
+  (setq cofru-popupinfo-delay '(1.25 . 0.5)))
+
 ;; Loads the section of the configuration dedicated to emacs packages
 ;; available in gnu/nongnu/melpa, comment the next line for disabling it.
 (load-file (locate-user-emacs-file "provided-by-gnu-nongnu-melpa.el"))
