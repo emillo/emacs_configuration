@@ -263,23 +263,23 @@ Save the minibuffer history so that it survives between emacs sessions.
 Minimalistic config, for the moment.
 
 #+begin_src elisp :tangle init.el
-      ;; Org mode
-      (use-package org
-        :ensure nil
-        :defer t
-        :config
-        (setq
-          org-agenda-include-diary t
-          org-confirm-babel-evaluate nil
-          org-ctrl-k-protect-subtree t
-          org-cycle-separator-lines 0
-          org-ellipsis " ⤵"
-          org-hide-emphasis-markers t
-          org-log-done 'time
-          org-startup-indented t
-          org-startup-folded 'showall)
-        :bind
-        ("C-c l" . org-store-link))
+  ;; Org mode
+  (use-package org
+    :ensure nil
+    :defer t
+    :config
+    (setq
+      org-agenda-include-diary t
+      org-confirm-babel-evaluate nil
+      org-ctrl-k-protect-subtree t
+      org-cycle-separator-lines 0
+      org-ellipsis " ⤵"
+      org-hide-emphasis-markers t
+      org-log-done 'time
+      org-startup-indented t
+      org-startup-folded 'showall)
+    :bind
+    ("C-c l" . org-store-link))
 #+end_src
 
 
@@ -687,7 +687,32 @@ To install the debian package:
     :pin manual)
 #+end_src
 
-*** TODO Org roam
+*** Org roam
+
+Org roam is a tool to build a "zettelkasten", or knowledge base, by inter linking notes.
+
+To install the debian package and its dependencies:
+
+#+begin_src bash
+  sudo apt install elpa-org-roam elpa-emacsql elpa-emacsql-sqlite org-roam-doc
+#+end_src
+
+Emacs lisp configuration:
+
+#+begin_src elisp :tangle provided-by-debian.el
+  ;; sudo apt install elpa-org-roam elpa-emacsql elpa-emacsql-sqliteorg-roam-doc
+  (use-package org-roam
+    :ensure nil
+    :pin manual
+    :custom
+    (org-roam-completion-everywhere t)
+    :bind
+    ("C-c n l" . org-roam-buffer-toggle)
+    ("C-c n f" . org-roam-node-find)
+    ("C-c n g" . org-roam-graph)
+    ("C-c n i" . org-roam-node-insert)
+    ("C-c n c" . org-roam-capture))
+#+end_src
 
 *** TODO Corfu
 
@@ -799,7 +824,7 @@ Restclient is a handy package to make REST calls. Very useful to test out remote
 
 *** Multiple-cursors
 Multiple cursors lets you edit mutliple lines ad once.
-#+begin_src elisp
+#+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
   (use-package multiple-cursors
     :ensure t
     :pin nongnu

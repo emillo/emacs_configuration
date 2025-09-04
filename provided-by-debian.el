@@ -131,6 +131,19 @@
   :ensure nil
   :pin manual)
 
+;; sudo apt install elpa-org-roam elpa-emacsql elpa-emacsql-sqliteorg-roam-doc
+(use-package org-roam
+  :ensure nil
+  :pin manual
+  :custom
+  (org-roam-completion-everywhere t)
+  :bind
+  ("C-c n l" . org-roam-buffer-toggle)
+  ("C-c n f" . org-roam-node-find)
+  ("C-c n g" . org-roam-graph)
+  ("C-c n i" . org-roam-node-insert)
+  ("C-c n c" . org-roam-capture))
+
 ;; Loads the section of the configuration dedicated to emacs packages
 ;; available in gnu/nongnu/melpa, comment the next line for disabling it.
 (load-file (locate-user-emacs-file "provided-by-gnu-nongnu-melpa.el"))

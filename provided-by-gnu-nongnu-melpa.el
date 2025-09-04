@@ -57,6 +57,24 @@
 (use-package ob-restclient
   :ensure t)
 
+(use-package multiple-cursors
+  :ensure t
+  :pin nongnu
+  :init
+  (defun multiple-cursors-prefix ()
+    (interactive)
+    (set-transient-map
+      (let ((map (make-sparse-keymap)))
+        (define-key map (kbd "n") 'mc/mark-next-like-this)
+        (define-key map (kbd "p") 'mc/mark-previous-like-this)
+        (define-key map (kbd "a") 'mc/mark-all-like-this) map)
+      t nil "Repeat with %k"))
+
+  (define-key (current-global-map) (kbd "C-x n") 'multiple-cursors-prefix)
+
+  :bind
+  (("C-c u" . mc/edit-lines)))
+
 (use-package dired-subtree
   :ensure t
   :after dired

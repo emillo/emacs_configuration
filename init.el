@@ -136,7 +136,9 @@
     org-hide-emphasis-markers t
     org-log-done 'time
     org-startup-indented t
-    org-startup-folded 'showall))
+    org-startup-folded 'showall)
+  :bind
+  ("C-c l" . org-store-link))
 
 ;; Italian calendar names
 (setq calendar-week-start-day 1
