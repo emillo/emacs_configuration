@@ -31,6 +31,7 @@
 (setq custom-file (make-temp-file "emacs-custom-"))
 
 ;; Minor modes
+(auto-save-visited-mode 1)
 (column-number-mode 1)
 (delete-selection-mode 1)
 (desktop-save-mode 1)
@@ -127,6 +128,17 @@
   :ensure nil
   :defer t
   :config
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((shell . t)
+       (emacs-lisp . t)
+       (python . t)
+       (js . t)
+       (sqlite . t)
+       (restclient . t)
+       (makefile . t)
+       (C . t)
+       (sql . t)))
   (setq
     org-agenda-include-diary t
     org-confirm-babel-evaluate nil

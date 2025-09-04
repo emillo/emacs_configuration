@@ -126,6 +126,7 @@ Note: ~fido-vertical-mode~ may be enabled if you don't use ~vertico~ (below)
 
 #+begin_src elisp :tangle init.el
   ;; Minor modes
+  (auto-save-visited-mode 1)
   (column-number-mode 1)
   (delete-selection-mode 1)
   (desktop-save-mode 1)
@@ -268,6 +269,17 @@ Minimalistic config, for the moment.
     :ensure nil
     :defer t
     :config
+    (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((shell . t)
+         (emacs-lisp . t)
+         (python . t)
+         (js . t)
+         (sqlite . t)
+         (restclient . t)
+         (makefile . t)
+         (C . t)
+         (sql . t)))
     (setq
       org-agenda-include-diary t
       org-confirm-babel-evaluate nil
@@ -280,6 +292,7 @@ Minimalistic config, for the moment.
       org-startup-folded 'showall)
     :bind
     ("C-c l" . org-store-link))
+
 #+end_src
 
 
