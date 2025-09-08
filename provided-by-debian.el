@@ -153,6 +153,13 @@
   :config
   (setq cofru-popupinfo-delay '(1.25 . 0.5)))
 
+;; sudo apt install elpa-rainbow-delimiters
+(use-package rainbow-delimiters
+  :ensure nil
+  :pin manual
+  :hook
+  (prog-mode . rainbow-delimiters-mode))
+
 ;; Loads the section of the configuration dedicated to emacs packages
 ;; available in gnu/nongnu/melpa, comment the next line for disabling it.
 (load-file (locate-user-emacs-file "provided-by-gnu-nongnu-melpa.el"))

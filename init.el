@@ -150,7 +150,9 @@
     org-startup-indented t
     org-startup-folded 'showall)
   :bind
-  ("C-c l" . org-store-link))
+  ("C-c l" . org-store-link)
+  ("C-c C-o" . org-open-at-point-global)
+  ("C-x C-a" . org-agenda))
 
 ;; Italian calendar names
 (setq calendar-week-start-day 1
