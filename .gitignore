@@ -7,3 +7,14 @@ projects
 diary
 session*
 
+/.emacs.desktop
+/.emacs.desktop.lock
+/elpa/
+/history
+/org-roam.db
+/recentf
+/tramp
+/transient/
+/tree-sitter/
+/.mc-lists.el
+/.org-id-locations
