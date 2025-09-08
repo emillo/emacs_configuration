@@ -914,3 +914,13 @@ Produces a new empty buffer with the same mode of the one you're on.
 *** TODO String inflection
 *** TODO Chordpro mode
 *** TODO Abc mode
+** Sensitive information
+
+Mostly email configuration
+
+#+begin_src elisp :tangle init.el
+  (when
+    (file-exists-p "~/private/init.el")
+    (load "~/private/init.el"))
+#+end_src
+

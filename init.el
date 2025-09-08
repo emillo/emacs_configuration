@@ -231,3 +231,7 @@
 ;; Loads the section of the configuration dedicated to emacs packages
 ;; available in debian, comment the next line for disabling it.
 (load-file (locate-user-emacs-file "provided-by-debian.el"))
+
+(when
+  (file-exists-p "~/private/init.el")
+  (load "~/private/init.el"))
