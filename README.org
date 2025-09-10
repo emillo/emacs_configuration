@@ -736,6 +736,8 @@ To install the debian package:
   sudo apt install elpa-corfu
 #+end_src
 
+Emacs lisp configuration:
+
 #+begin_src elisp :tangle provided-by-debian.el
   ;; sudo apt install elpa-corfu
   (use-package corfu
@@ -762,8 +764,6 @@ To install the debian package:
     (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
-
-*** TODO Deft
 
 ** Packages from external repositories
 
@@ -919,6 +919,9 @@ Produces a new empty buffer with the same mode of the one you're on.
 #+end_src
 
 *** Drag-stuff
+
+You can move lines up and down with Alt + arrows.
+
 #+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
   (use-package drag-stuff
     :ensure t
@@ -928,9 +931,26 @@ Produces a new empty buffer with the same mode of the one you're on.
     :hook (after-init . drag-stuff-global-mode))
 #+end_src
 
-*** TODO String inflection
-*** TODO Chordpro mode
-*** TODO Abc mode
+*** String inflection
+
+A useful package that let you cycle through various styles: camelCase, PascalCase, snake_case, UP_CASE, kebab-case, Capital_Snake_Case, and so on...
+
+#+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
+  (use-package string-inflection
+    :ensure t    
+    :bind
+    ("C-c i" . string-inflection-all-cycle))
+#+end_src
+
+*** Chordpro mode
+Mode for editing [[https://www.chordpro.org/][ChordPro]] files.
+
+#+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
+  (use-package chordpro-mode
+    :ensure t)
+#+end_src
+
+*** Abc mode
 ** Sensitive information
 
 Mostly email configuration

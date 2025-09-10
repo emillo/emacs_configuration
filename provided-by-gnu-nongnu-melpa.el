@@ -97,3 +97,11 @@
   (drag-stuff-define-keys)
   (add-to-list 'drag-stuff-except-modes 'org-mode)
   :hook (after-init . drag-stuff-global-mode))
+
+(use-package string-inflection
+  :ensure t    
+  :bind
+  ("C-c i" . string-inflection-all-cycle))
+
+(use-package chordpro-mode
+  :ensure t)
