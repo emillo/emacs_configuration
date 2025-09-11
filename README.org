@@ -947,7 +947,8 @@ Mode for editing [[https://www.chordpro.org/][ChordPro]] files.
 
 #+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
   (use-package chordpro-mode
-    :ensure t)
+    :ensure t
+    :mode "\\.cho\\'")
 #+end_src
 
 *** Abc mode

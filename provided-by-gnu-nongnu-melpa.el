@@ -104,4 +104,5 @@
   ("C-c i" . string-inflection-all-cycle))
 
 (use-package chordpro-mode
-  :ensure t)
+  :ensure t
+  :mode "\\.cho\\'")
