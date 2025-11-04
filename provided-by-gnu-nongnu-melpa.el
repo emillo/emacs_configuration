@@ -48,6 +48,10 @@
   :bind
   ("C-c j" . org-journal-new-entry))
 
+(with-eval-after-load 'org-journal
+  (remove-hook 'calendar-today-visible-hook 'org-journal-mark-entries)
+  (remove-hook 'calendar-today-invisible-hook 'org-journal-mark-entries))
+
 (use-package restclient
   :ensure t
   :init
@@ -106,3 +110,7 @@
 (use-package chordpro-mode
   :ensure t
   :mode "\\.cho\\'")
+
+(use-package abc-mode
+  :ensure t
+  :mode "\\.abc\\'")

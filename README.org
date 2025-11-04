@@ -290,6 +290,7 @@ Minimalistic config, for the moment.
       org-log-done 'time
       org-startup-indented t
       org-startup-folded 'showall)
+    :mode ("\\.org\\'" . org-mode)
     :bind
     ("C-c l" . org-store-link)
     ("C-c C-o" . org-open-at-point-global)
@@ -853,6 +854,10 @@ Org journal helps keeping a journal in org mode, integrated with the emacs calen
     :bind
     ("C-c j" . org-journal-new-entry))
 
+  (with-eval-after-load 'org-journal
+    (remove-hook 'calendar-today-visible-hook 'org-journal-mark-entries)
+    (remove-hook 'calendar-today-invisible-hook 'org-journal-mark-entries))
+
 #+end_src
 
 *** Restclient
@@ -952,6 +957,13 @@ Mode for editing [[https://www.chordpro.org/][ChordPro]] files.
 #+end_src
 
 *** Abc mode
+Mode for editing [[https://en.wikipedia.org/wiki/ABC_notation][ABC notation]].
+#+begin_src elisp :tangle provided-by-gnu-nongnu-melpa.el
+  (use-package abc-mode
+    :ensure t
+    :mode "\\.abc\\'")
+#+end_src
+
 ** Sensitive information
 
 Mostly email configuration

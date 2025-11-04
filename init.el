@@ -149,6 +149,7 @@
     org-log-done 'time
     org-startup-indented t
     org-startup-folded 'showall)
+  :mode ("\\.org\\'" . org-mode)
   :bind
   ("C-c l" . org-store-link)
   ("C-c C-o" . org-open-at-point-global)
