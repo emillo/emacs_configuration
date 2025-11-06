@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; Emiliano Grilli's Emacs configuration
 
 ;; Vanilla emacs section (init.el):
