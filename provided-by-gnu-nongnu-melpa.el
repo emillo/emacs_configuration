@@ -23,6 +23,8 @@
 
 (use-package ef-themes
   :ensure t
+  :init
+  (ef-themes-take-over-modus-themes-mode 1)
   :config
   (setq ef-themes-headings
     '((1 semibold  variable-pitch 1.6)

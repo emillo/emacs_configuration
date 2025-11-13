@@ -1,4 +1,3 @@
-;; -*- lexical-binding: t; -*-
 ;; Emiliano Grilli's Emacs configuration
 
 ;; Vanilla emacs section (init.el):
@@ -68,7 +67,7 @@
      (t . (1.3))))
 (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted))
 
-(load-theme 'modus-vivendi-tinted)
+(load-theme 'modus-vivendi-tinted t)
 
 ;; Font
 (set-frame-font "Hack-15")
@@ -149,7 +148,8 @@
     org-hide-emphasis-markers t
     org-log-done 'time
     org-startup-indented t
-    org-startup-folded 'showall)
+    org-startup-folded 'showall
+    org-directory "~/Documenti/org")
   :mode ("\\.org\\'" . org-mode)
   :bind
   ("C-c l" . org-store-link)

@@ -137,90 +137,38 @@
   :pin manual
   :custom
   (org-roam-completion-everywhere t)
+  (org-roam-db-autosync-mode t)
+  (org-roam-db-location "~/.emacs.d/zettelkasten.db")
+  (org-roam-directory
+    (file-truename
+      (concat (file-name-as-directory org-directory ) "zettel")))
+  (org-roam-node-display-template
+    (concat "${title:*}"
+      (propertize "${tags:20}" 'face 'org-tag))
+    (org-roam-capture-templates
+      '(("d" "default" plain
+          "%?"
+          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+          :unnarrowed t)
+         ("b" "book notes" plain
+           "\n* Dati Libro\n\nAutore: %^{Autore}\nTitolo: ${title}\nAnno: %^{Anno}\n\n* Sommario\n\n%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)
+         ("p" "project" plain "* Obiettivi\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+           :unnarrowed t))))
   :bind
   ("C-c n l" . org-roam-buffer-toggle)
   ("C-c n f" . org-roam-node-find)
   ("C-c n g" . org-roam-graph)
   ("C-c n i" . org-roam-node-insert)
-  ("C-c n c" . org-roam-capture)
-  ("C-c n p" . my/org-roam-find-project))
-
-(defun org-roam-node-insert-immediate (arg &rest args)
-  (interactive "P")
-  (let ((args (push arg args))
-        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
-                                                  '(:immediate-finish t)))))
-    (apply #'org-roam-node-insert args)))
-
-(defun my/org-roam-filter-by-tag (tag-name)
-  (lambda (node)
-    (member tag-name (org-roam-node-tags node))))
-
-(defun my/org-roam-list-notes-by-tag (tag-name)
-  (mapcar #'org-roam-node-file
-          (seq-filter
-           (my/org-roam-filter-by-tag tag-name)
-           (org-roam-node-list))))
-
-(defun my/org-roam-refresh-agenda-list ()
-  (interactive)
-  (setq org-agenda-files
-        (delete-dups
-         (append org-agenda-files
-                 (my/org-roam-list-notes-by-tag "Project")))))
-
-;; Build the agenda list the first time for the session
-;; (my/org-roam-refresh-agenda-list)
-
-(defun my/org-roam-project-finalize-hook ()
-  "Adds the captured project file to `org-agenda-files' if the
-  capture was not aborted."
-  ;; Remove the hook since it was added temporarily
-  (remove-hook 'org-capture-after-finalize-hook #'my/org-roam-project-finalize-hook)
-
-  ;; Add project file to the agenda list if the capture was confirmed
-  (unless org-note-abort
-    (with-current-buffer (org-capture-get :buffer)
-      (add-to-list 'org-agenda-files (buffer-file-name)))))
-
-(defun my/org-roam-find-project ()
-  (interactive)
-  ;; Add the project file to the agenda after capture is finished
-  (add-hook 'org-capture-after-finalize-hook #'my/org-roam-project-finalize-hook)
-
-  ;; Select a project file to open, creating it if necessary
-  (org-roam-node-find
-   nil
-   nil
-   (my/org-roam-filter-by-tag "Project")
-   nil
-   :templates
-   '(("p" "Project" plain "* Obiettivi\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
-      :unnarrowed t))))
-
-(defun my/org-roam-files-with-tag (tag-name)
-  (seq-uniq
-   (mapcar #'car
-           (org-roam-db-query
-            `[:select [nodes:file]
-              :from tags
-              :left-join nodes
-              :on (= tags:node-id nodes:id)
-              :where (like tag (quote ,(concat "%\"" tag-name "\"%")))]))))
-
-(defun my/org-roam-update-agenda ()
-  (interactive)
-  (setq org-agenda-files
-        (delete-dups
-         (append org-agenda-files
-                 (my/org-roam-files-with-tag "Project")
-                 (my/org-roam-files-with-tag "Agenda")))))
+  ("C-c n s" . my/org-roam-rg-search)
+  ("C-c n c" . org-roam-capture))
 
 (defun my/org-roam-rg-search ()
   "Search org-roam directory using consult-ripgrep. With live-preview."
   (interactive)
-  (let () (counsel-rg "" org-roam-directory)))
+  (let () (consult-ripgrep org-roam-directory "")))
 
 ;; sudo apt install elpa-corfu
 (use-package corfu
