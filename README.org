@@ -793,6 +793,20 @@ Emacs lisp configuration:
     (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
+*** Olivetti
+#+begin_src bash
+  sudo apt install elpa-olivetti
+#+end_src
+
+#+begin_src elisp :tangle provided-by-debian.el
+  (use-package olivetti
+    :ensure nil
+    :pin manual
+    :config
+    (olivetti-set-width 100))
+#+end_src
+
+
 
 ** Packages from external repositories
 

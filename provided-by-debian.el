@@ -186,6 +186,12 @@
   :hook
   (prog-mode . rainbow-delimiters-mode))
 
+(use-package olivetti
+  :ensure nil
+  :pin manual
+  :config
+  (olivetti-set-width 100))
+
 ;; Loads the section of the configuration dedicated to emacs packages
 ;; available in gnu/nongnu/melpa, comment the next line for disabling it.
 (load-file (locate-user-emacs-file "provided-by-gnu-nongnu-melpa.el"))
