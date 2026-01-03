@@ -245,6 +245,7 @@ Usually I move into other window with `C-x o` but sometimes useful to move preci
   (global-set-key [remap dabbrev-expand] 'hippie-expand)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (global-set-key (kbd "M-+") 'mark-word)
+  (global-set-key (kbd "<f8>") 'mode-line-other-buffer)
 #+end_src
 
 *** Save history
