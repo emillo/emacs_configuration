@@ -807,6 +807,24 @@ Emacs lisp configuration:
 #+end_src
 
 
+*** Dumb Jump
+#+begin_src bash
+  sudo apt install elpa-dumb-jump
+#+end_src
+
+#+begin_src elisp :tangle provided-by-debian.el
+
+  (use-package dumb-jump
+    :ensure nil
+    :pin manual
+    :config
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+    (setq dumb-jump-force-searcher 'rg)
+    ;; use completion-read instead of a separate buffer with candidates
+    (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+#+end_src
+
+
 
 ** Packages from external repositories
 

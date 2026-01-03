@@ -192,6 +192,15 @@
   :config
   (olivetti-set-width 100))
 
+(use-package dumb-jump
+  :ensure nil
+  :pin manual
+  :config
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (setq dumb-jump-force-searcher 'rg)
+  ;; use completion-read instead of a separate buffer with candidates
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+
 ;; Loads the section of the configuration dedicated to emacs packages
 ;; available in gnu/nongnu/melpa, comment the next line for disabling it.
 (load-file (locate-user-emacs-file "provided-by-gnu-nongnu-melpa.el"))
