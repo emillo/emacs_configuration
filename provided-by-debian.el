@@ -189,8 +189,9 @@
 (use-package olivetti
   :ensure nil
   :pin manual
-  :config
-  (olivetti-set-width 100))
+  :init
+  (add-hook 'olivetti-mode-on-hook
+    (lambda () (olivetti-set-width 100))))
 
 (use-package dumb-jump
   :ensure nil
