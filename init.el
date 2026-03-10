@@ -118,6 +118,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-+") 'mark-word)
 (global-set-key (kbd "<f8>") 'mode-line-other-buffer)
+(global-set-key (kbd "C-c d") 'duplicate-dwim)
 
 ;; Save history
 (use-package savehist
