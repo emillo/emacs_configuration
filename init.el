@@ -158,6 +158,29 @@
   ("C-c C-o" . org-open-at-point-global)
   ("C-x C-a" . org-agenda))
 
+(use-package org-capture
+  :ensure nil
+  :custom
+  '(("x" "x selection" entry
+      (file+olp+datetree "~/Documenti/org/reference.org")
+      "* %?\n                 Entered on %U\n                 %x"
+      :empty-lines-after 1 :unnarrowed t)
+     ("e" "evento" entry (file "~/Documenti/org/emi.org") "* %? %T"
+       :empty-lines-after 1)
+     ("m" "MIDI")
+     ("mr" "MIDI recording" entry
+       (file+olp+datetree
+         "~/Documenti/org/zettel/20250424122012-midi_multitrack_recording.org"
+         "Instances")
+       "** %^{Nome della sessione}\n- Key: %^{Tonalità}\n- Note: %^{Note}\n- {Position}: %^(mil-midish-song-org-link)\n %?")
+     ("p" "Protocol" entry
+       (file+olp+datetree "~/Documenti/org/reference.org")
+       "* %^{Title}\nSource: %u, %:link\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+     ("L" "Protocol Link" entry
+       (file+olp+datetree "~/Documenti/org/reference.org")
+       "* [[%:link][%:description]] \nCaptured On: %U\n%?"))
+  :bind ("C-c c" . org-capture))
+
 ;; Italian calendar names
 (setq calendar-week-start-day 1
   calendar-day-name-array ["Domenica" "Lunedì" "Martedì" "Mercoledì"

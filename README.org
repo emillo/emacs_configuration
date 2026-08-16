@@ -301,6 +301,45 @@ Minimalistic config, for the moment.
 
 #+end_src
 
+**** Custom functions
+#+begin_src elisp
+  (defun mil-org-file-link (basedir)
+    (let ((file (read-file-name
+                  "File da linkare: " basedir)))
+      (concat "[[file:" file "]]")))
+
+  (defun mil-midish-song-org-link ()
+    (mil-org-file-link "~/Documenti/Musica/MidishSongs/"))
+#+end_src
+
+
+**** Org-capture templates
+#+begin_src elisp :tangle init.el
+  (use-package org-capture
+    :ensure nil
+    :bind ("C-c c" . org-capture)
+    :custom
+    (org-capture-templates
+      '(("x" "x selection" entry
+        (file+olp+datetree "~/Documenti/org/reference.org")
+        "* %?\n                 Entered on %U\n                 %x"
+        :empty-lines-after 1 :unnarrowed t)
+       ("e" "evento" entry (file "~/Documenti/org/emi.org") "* %? %T"
+         :empty-lines-after 1)
+       ("m" "MIDI")
+       ("mr" "MIDI recording" entry
+         (file+olp+datetree
+           "~/Documenti/org/zettel/20250424122012-midi_multitrack_recording.org"
+           "Instances")
+         "** %^{Nome della sessione}\n- Key: %^{Tonalità}\n- Note: %^{Note}\n- Position: %(mil-midish-song-org-link)\n %?")
+       ("p" "Protocol" entry
+         (file+olp+datetree "~/Documenti/org/reference.org")
+         "* %^{Title}\nSource: %u, %:link\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+       ("L" "Protocol Link" entry
+         (file+olp+datetree "~/Documenti/org/reference.org")
+         "* [[%:link][%:description]] \nCaptured On: %U\n%?"))))
+
+#+end_src
 
 *** Italian calendar/diary localization
 
