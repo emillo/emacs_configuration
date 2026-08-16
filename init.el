@@ -152,6 +152,8 @@
     org-startup-indented t
     org-startup-folded 'showall
     org-directory "~/Documenti/org")
+  ; man pages should be linkable!
+  (require 'ol-man) 
   :mode ("\\.org\\'" . org-mode)
   :bind
   ("C-c l" . org-store-link)
@@ -160,8 +162,10 @@
 
 (use-package org-capture
   :ensure nil
+  :bind ("C-c c" . org-capture)
   :custom
-  '(("x" "x selection" entry
+  (org-capture-templates
+    '(("x" "x selection" entry
       (file+olp+datetree "~/Documenti/org/reference.org")
       "* %?\n                 Entered on %U\n                 %x"
       :empty-lines-after 1 :unnarrowed t)
@@ -172,14 +176,13 @@
        (file+olp+datetree
          "~/Documenti/org/zettel/20250424122012-midi_multitrack_recording.org"
          "Instances")
-       "** %^{Nome della sessione}\n- Key: %^{Tonalità}\n- Note: %^{Note}\n- {Position}: %^(mil-midish-song-org-link)\n %?")
+       "** %^{Nome della sessione}\n- Key: %^{Tonalità}\n- Note: %^{Note}\n- Position: %(mil-midish-song-org-link)\n %?")
      ("p" "Protocol" entry
        (file+olp+datetree "~/Documenti/org/reference.org")
        "* %^{Title}\nSource: %u, %:link\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
      ("L" "Protocol Link" entry
        (file+olp+datetree "~/Documenti/org/reference.org")
-       "* [[%:link][%:description]] \nCaptured On: %U\n%?"))
-  :bind ("C-c c" . org-capture))
+       "* [[%:link][%:description]] \nCaptured On: %U\n%?"))))
 
 ;; Italian calendar names
 (setq calendar-week-start-day 1
