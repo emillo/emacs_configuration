@@ -118,6 +118,15 @@ Here I set some native emacs variables to fine tune its behaviour to how I like 
   (setq custom-file (make-temp-file "emacs-custom-"))
 #+end_src
 
+**** Dired
+Some customization on how dired shows files
+#+begin_src elisp :tangle init.el
+  (use-package dired
+    :ensure nil
+    :custom
+    (dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso"))
+#+end_src
+
 
 *** Minor modes
 

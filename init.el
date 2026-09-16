@@ -30,6 +30,11 @@
 ;; send customizations away from init.el (prot)
 (setq custom-file (make-temp-file "emacs-custom-"))
 
+(use-package dired
+  :ensure nil
+  :custom
+  (dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso"))
+
 ;; Minor modes
 (auto-save-visited-mode 1)
 (column-number-mode 1)
